@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 const App = () => {
   return (
     <>
-    <div>Hello world! Tanvir AIUB</div>
+    <div>Hello world!</div>
     </>
   );
 };
