@@ -2,16 +2,17 @@
 import React from 'react';
 import TopBar from '../../components/TopBar';
 import Sidebar from '../../components/Sidebar';
+import Profile from "./Profile"
 
 const EntrepreneurPortal = () => {
   return (
     <div className="flex h-screen">
       <Sidebar portal="entrepreneur" />
       <div className="flex-1">
-        <TopBar portal="entrepreneur"/>
-        {/* Content will be rendered here */}
+        <TopBar portal="entrepreneur" />
       </div>
     </div>
+
   );
 };
 
