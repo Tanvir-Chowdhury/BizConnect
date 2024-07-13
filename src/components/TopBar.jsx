@@ -1,19 +1,90 @@
 // components/TopBar.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const TopBar = () => {
+const TopBar = ({portal}) => {
+  // notification number
+  const notificationNumber=2;
+  // notification details array
+  const notificationDetails=[
+    {id:1, name: "Notification-1"},
+    {id:2, name: "Notification-2"},
+  ];
+  // import link from json
+  const [link,setLink]=useState('');
+  useEffect(()=>{
+    fetch('items.json')
+    .then(res=>res.json())
+    .then(data=>{
+      //const role=portal;
+      const notificationPage=data[portal].find(item=>item.label==='Notifications');
+      setLink(notificationPage.link);
+    })
+  },[])
   return (
-    <div className="fixed top-0 left-0 w-full h-16 bg-white shadow-md">
-      <div className="flex justify-between items-center h-full px-4">
-        <div className="flex items-center">
-          <i className="fas fa-bars text-lg cursor-pointer" />
-          <span className="ml-4 text-lg font-bold">Logo</span>
+    <div className="navbar bg-white w-full h-16">
+    <div className="flex-1">
+    <a className="btn btn-ghost text-xl font-bold text-black">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
+      </svg>
+      BizConnect
+    </a>
+    </div>
+    <div className="flex-none">
+    <div className="dropdown dropdown-end">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+        <div className="indicator tooltip tooltip-bottom" data-tip="new notification">
+          <span className="loading loading-ring loading-sm indicator-item badge font-bold badge-neutral text-red-500"></span>
+          <div className=" grid place-items-center text-black">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-8">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5" />
+          </svg>
+          </div>
         </div>
-        <div className="flex items-center">
-          <i className="fas fa-bell text-lg cursor-pointer" />
+      </div>
+      <div
+        tabIndex={0}
+        className="card card-compact dropdown-content bg-white text-black z-[1] mt-3 w-52 shadow">
+        <div className="card-body">
+          {/* notification number */}
+          <span className="text-lg font-bold">{notificationNumber} Notifications</span>
+          {/* notification details */}
+          <ul>
+          {
+            notificationDetails.map(notificationDetail=>
+              <li key={notificationDetail.id} className='border-b'>{notificationDetail.name}</li>
+            )
+          }
+          </ul>
+          {/* redirect to notification tab */}
+          <span className="text-info text-center"><a href={link}>See All</a></span>
+          
+
         </div>
       </div>
     </div>
+    <div className="dropdown dropdown-end">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+        <div className="w-10 rounded-full">
+          <img
+            alt="Tailwind CSS Navbar component"
+            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+        </div>
+      </div>
+      <ul
+        tabIndex={0}
+        className="menu menu-sm dropdown-content bg-white rounded-box z-[1] mt-3 w-52 p-2 shadow text-black">
+        <li>
+          <a className="justify-between">
+            Profile
+          </a>
+        </li>
+        <li><a>Settings</a></li>
+        <li><a>Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
   );
 };
 

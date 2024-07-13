@@ -7,8 +7,8 @@ const StudentPortal = () => {
   return (
     <div className="flex h-screen">
       <Sidebar portal="student" />
-      <div className="flex-1 p-4">
-        <TopBar />
+      <div className="flex-1">
+        <TopBar portal="student" />
         {/* Content will be rendered here */}
       </div>
     </div>
