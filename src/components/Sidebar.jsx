@@ -1,56 +1,49 @@
-// components/Sidebar.js
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Sidebar = ({ portal }) => {
-  const [links, setLinks]=useState([]);
-  useEffect(()=>{
-    fetch('items.json')
-    .then(res=>res.json())
-    .then(data=>{
-      const roleLinks=data[portal] || [];
-      setLinks(roleLinks);
-    })
-  },[])
+  // Define sidebar links based on role
+  const sidebarLinks = {
+    entrepreneur: [
+      { to: '/entrepreneur/profile', text: 'Profile' },
+      { to: '/entrepreneur/startups', text: 'Startups' },
+      { to: '/entrepreneur/findPartners', text: 'Find Partners' },
+      { to: '/entrepreneur/findInvestors', text: 'Find Investors' },
+      { to: '/entrepreneur/findMentors', text: 'Find Mentors' },
+      { to: '/entrepreneur/findEmployees', text: 'Find Employees' },
+      { to: '/entrepreneur/notifications', text: 'Notifications' },
+      
+    ],
+    investor: [
+      { to: '/investor/profile', text: 'Profile' },
+      { to: '/investor/findStartups', text: 'Find Startups' },
+      { to: '/investor/findMentees', text: 'Find Mentees' },
+      { to: '/investor/notifications', text: 'Notifications' },
+    ],
+    student: [
+      { to: '/student/profile', text: 'Profile' },
+      { to: '/student/findJobs', text: 'Find Jobs' },
+      { to: '/student/findPartners', text: 'Find Partners' },
+      { to: '/student/notifications', text: 'Notifications' },
+    ],
+  };
+
+  // Get links based on role
+  const links = sidebarLinks[portal] || [];
 
   return (
-    <div className="">
-      <div className="fixed left-0 top-16 w-64 h-screen bg-gray-800 shadow-md hidden md:flex">
-      <ul className="list-none m-0 p-0 w-full">
-        {
-          links.map((item,index)=>(
-            <a key={index} className='text-white' href={item.link}>
-            <li key={index} className='p-1 md:p-3 lg:p-5 hover:bg-gray-400 hover:text-gray-800 w-full text-xl'>
-              {item.label}
-            </li></a>
-          ))
-        }
+    <div className="sidebar bg-gray-800">
+      <ul className='divide-y divide-white'>
+        {links.map((link, index) => (
+          <Link key={index} to={link.to} className=''>
+            <li key={index} className='border-b-2 border-gray-400 text-white py-4 hover:bg-gray-400 hover:text-gray-800 w-full text-xl px-6'>
+              {link.text}
+            </li>
+          </Link>
+        ))}
       </ul>
-      </div>
-
-      <div className="fixed left-0 top-16 w-screen bg-white shadow-md md:hidden">
-      <div className="drawer justify-center">
-        <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content">
-          {/* Page content here */}
-          <label htmlFor="my-drawer" className="btn btn-primary drawer-button text-white font-semibold">Menu</label>
-        </div>
-      <div className="drawer-side">
-        <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
-          <ul className="menu bg-white text-base-content min-h-full w-1/2 px-2 py-4">
-            {/* Sidebar content here */}
-            {
-            links.map((item,index)=>(
-              <li key={index} className='p-1 md:p-3 lg:p-5'>
-                <a className='text-black' href={item.link}>{item.label}</a>
-              </li>
-            ))
-            }
-          </ul>
-        </div>
-      </div>
-      </div>
     </div>
-    
+
   );
 };
 
