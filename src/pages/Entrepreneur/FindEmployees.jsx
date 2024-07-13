@@ -3,9 +3,12 @@ import React from 'react';
 
 const FindEmployees = () => {
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold">Find Employees</h1>
-      {/* Find employees content will be rendered here */}
+    <div className="">
+      <div className="container mx-auto">
+        {
+          <h1>Employee</h1>
+        }
+      </div>
     </div>
   );
 };

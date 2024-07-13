@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 const Sidebar = ({ portal }) => {
   const [links, setLinks]=useState([]);
   useEffect(()=>{
-    fetch('items.json')
+    fetch('/public/items.json')
     .then(res=>res.json())
     .then(data=>{
       const roleLinks=data[portal] || [];
