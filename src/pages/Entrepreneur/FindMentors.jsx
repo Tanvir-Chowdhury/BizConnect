@@ -1,5 +1,5 @@
 // pages/FindMentors.js
-import React from 'eact';
+import React from 'react';
 
 const FindMentors = () => {
   return (

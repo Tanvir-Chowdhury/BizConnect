@@ -1,4 +1,5 @@
 // components/TopBar.js
+import { data } from 'autoprefixer';
 import React, { useEffect, useState } from 'react';
 
 const TopBar = ({portal}) => {
@@ -11,13 +12,21 @@ const TopBar = ({portal}) => {
   ];
   // import link from json
   const [link,setLink]=useState('');
+  const [profile,setProfile]=useState('');
   useEffect(()=>{
     fetch('items.json')
     .then(res=>res.json())
     .then(data=>{
-      //const role=portal;
       const notificationPage=data[portal].find(item=>item.label==='Notifications');
       setLink(notificationPage.link);
+    })
+  },[])
+  useEffect(()=>{
+    fetch('items.json')
+    .then(res=>res.json())
+    .then(data=>{
+      const profilePage=data[portal].find(item=>item.label==='Profile');
+      setProfile(profilePage.link);
     })
   },[])
   return (
@@ -75,11 +84,13 @@ const TopBar = ({portal}) => {
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-white rounded-box z-[1] mt-3 w-52 p-2 shadow text-black">
         <li>
-          <a className="justify-between">
+          {/* redirect in profile page */}
+          <a className="justify-between" href={profile}>
             Profile
           </a>
         </li>
-        <li><a>Settings</a></li>
+        {/* redirect to profile for setting you can remove it */}
+        <li><a href={profile}>Settings</a></li>
         <li><a>Logout</a></li>
       </ul>
     </div>
