@@ -1,6 +1,7 @@
 // components/TopBar.js
 import { data } from 'autoprefixer';
 import React, { useEffect, useState } from 'react';
+import { Navigate } from "react-router-dom";
 
 const TopBar = ({portal}) => {
   // notification number
@@ -32,17 +33,14 @@ const TopBar = ({portal}) => {
   return (
     <div className="navbar bg-white w-full h-16">
     <div className="flex-1">
-    <a className="btn btn-ghost text-xl font-bold text-black">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
-      </svg>
-      BizConnect
+    <a className="btn btn-ghost text-xl font-bold text-black mb-4">
+      <img width= "200px" src="../../public/logo/BizConnect.png" alt="" />
     </a>
     </div>
     <div className="flex-none">
     <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-        <div className="indicator tooltip tooltip-bottom" data-tip="new notification">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle mr-4">
+        <div className="indicator tooltip tooltip-bottom">
           <span className="loading loading-ring loading-sm indicator-item badge font-bold badge-neutral text-red-500"></span>
           <div className=" grid place-items-center text-black">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-8">
@@ -53,7 +51,7 @@ const TopBar = ({portal}) => {
       </div>
       <div
         tabIndex={0}
-        className="card card-compact dropdown-content bg-white text-black z-[1] mt-3 w-52 shadow">
+        className="card card-compact dropdown-content bg-white text-black z-[1] mt-3 w-52 shadow ">
         <div className="card-body">
           {/* notification number */}
           <span className="text-lg font-bold">{notificationNumber} Notifications</span>
@@ -73,7 +71,7 @@ const TopBar = ({portal}) => {
       </div>
     </div>
     <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mr-4">
         <div className="w-10 rounded-full">
           <img
             alt="Tailwind CSS Navbar component"
