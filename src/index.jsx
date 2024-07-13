@@ -1,5 +1,5 @@
 // src/index.js
-import React from 'eact';
+import React from 'react';
 import ReactDOM from 'eact-dom';
 import App from './App';
 

@@ -1,5 +1,5 @@
 // pages/Startups.js
-import React from 'eact';
+import React from 'react';
 
 const Startups = () => {
   return (

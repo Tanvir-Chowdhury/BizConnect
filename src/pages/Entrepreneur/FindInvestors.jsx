@@ -1,5 +1,5 @@
 // pages/FindInvestors.js
-import React from 'eact';
+import React from 'react';
 
 const FindInvestors = () => {
   return (

@@ -1,5 +1,5 @@
 // pages/Notifications.js
-import React from 'eact';
+import React from 'react';
 
 const Notifications = () => {
   return (

@@ -1,5 +1,5 @@
 // pages/FindEmployees.js
-import React from 'eact';
+import React from 'react';
 
 const FindEmployees = () => {
   return (

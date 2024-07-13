@@ -1,5 +1,5 @@
 // pages/FindPartners.js
-import React from 'eact';
+import React from 'react';
 
 const FindPartners = () => {
   return (
