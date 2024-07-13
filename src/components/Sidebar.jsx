@@ -2,6 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Sidebar = ({ portal }) => {
+
+  //const [links, setLinks]=useState([]);
+  //useEffect(()=>{
+    //fetch('/public/items.json')
+    //.then(res=>res.json())
+    //.then(data=>{
+      //const roleLinks=data[portal] || [];
+      //setLinks(roleLinks);
+    //})
+  //},[])
+
   // Define sidebar links based on role
   const sidebarLinks = {
     entrepreneur: [
@@ -30,6 +41,7 @@ const Sidebar = ({ portal }) => {
 
   // Get links based on role
   const links = sidebarLinks[portal] || [];
+
 
   return (
     <div className="sidebar bg-gray-800">
