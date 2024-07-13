@@ -14,13 +14,14 @@ const Sidebar = ({ portal }) => {
 
   return (
     <div className="">
-      <div className="fixed left-0 top-16 w-64 h-screen bg-gray-100 shadow-md hidden md:flex">
+      <div className="fixed left-0 top-16 w-64 h-screen bg-gray-800 shadow-md hidden md:flex">
       <ul className="list-none m-0 p-0 w-full">
         {
           links.map((item,index)=>(
-            <li key={index} className='p-1 md:p-3 lg:p-5 hover:bg-gray-400 w-full text-xl'>
-              <a className='text-black' href={item.link}>{item.label}</a>
-            </li>
+            <a key={index} className='text-white' href={item.link}>
+            <li key={index} className='p-1 md:p-3 lg:p-5 hover:bg-gray-400 hover:text-gray-800 w-full text-xl'>
+              {item.label}
+            </li></a>
           ))
         }
       </ul>
