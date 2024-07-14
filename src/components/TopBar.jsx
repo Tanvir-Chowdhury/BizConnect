@@ -31,7 +31,9 @@ const TopBar = ({portal}) => {
     })
   },[])
   return (
+
     <div className="navbar bg-gradient-to-l from-[#b75cff] to-[#e0c3fc] w-full h-16 sticky top-0 z-50">
+
     <div className="flex-1">
     <a className="btn btn-ghost text-xl font-bold text-black mb-4">
       <img width= "200px" src="../../public/logo/BizConnect.png" alt="" />
