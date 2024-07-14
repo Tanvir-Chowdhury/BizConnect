@@ -1,0 +1,203 @@
+[
+    {
+      "id": "1",
+      "fullName": "John Doe",
+      "email": "john.doe@example.com",
+      "phoneNumber": "+1234567890",
+      "company": "Tech Innovators",
+      "jobTitle": "Founder & CEO",
+      "bio": "Passionate about technology and entrepreneurship. Building innovative solutions to change the world.",
+      "skills": ["JavaScript", "React.js", "Node.js", "MongoDB", "Product Management"],
+      "experience": [
+        {
+          "title": "Founder & CEO",
+          "company": "Tech Innovators",
+          "startDate": "2015",
+          "endDate": "Present"
+        },
+        {
+          "title": "Senior Software Engineer",
+          "company": "Tech Solutions Ltd.",
+          "startDate": "2010",
+          "endDate": "2015"
+        }
+      ],
+      "education": [
+        {
+          "degree": "Bachelor of Science",
+          "fieldOfStudy": "Computer Science",
+          "school": "University of Tech",
+          "startDate": "2006",
+          "endDate": "2010"
+        }
+      ],
+      "projects": [
+        {"name": "Project X"},
+        {"name": "Project Y"}
+      ],
+      "linkedIn": "https://linkedin.com/johndoe",
+      "website": "https://techinnovators.com",
+      "profilePicUrl": "https://example.com/johndoe.jpg"
+    },
+    {
+      "id": "2",
+      "fullName": "Jane Smith",
+      "email": "jane.smith@example.com",
+      "phoneNumber": "+1987654321",
+      "company": "Smith Enterprises",
+      "jobTitle": "Co-Founder & CTO",
+      "bio": "Tech enthusiast with a focus on creating scalable solutions. Bringing innovation to everyday challenges.",
+      "skills": ["Python", "Django", "AWS", "UI/UX Design", "Agile Development"],
+      "experience": [
+        {
+          "title": "Co-Founder & CTO",
+          "company": "Smith Enterprises",
+          "startDate": "2013",
+          "endDate": "Present"
+        },
+        {
+          "title": "Software Engineer",
+          "company": "Tech Solutions Inc.",
+          "startDate": "2008",
+          "endDate": "2013"
+        }
+      ],
+      "education": [
+        {
+          "degree": "Master of Science",
+          "fieldOfStudy": "Computer Engineering",
+          "school": "Tech University",
+          "startDate": "2004",
+          "endDate": "2008"
+        }
+      ],
+      "projects": [
+        {"name": "Project A"},
+        {"name": "Project B"}
+      ],
+      "linkedIn": "https://linkedin.com/janesmith",
+      "website": "https://smithenterprises.com",
+      "profilePicUrl": "https://example.com/janesmith.jpg"
+    },
+    {
+      "id": "3",
+      "fullName": "David Brown",
+      "email": "david.brown@example.com",
+      "phoneNumber": "+1122334455",
+      "company": "Innovate Labs",
+      "jobTitle": "Lead Developer",
+      "bio": "Passionate about coding and building scalable applications. Always learning and exploring new technologies.",
+      "skills": ["Java", "Spring Boot", "MySQL", "Microservices Architecture", "Project Management"],
+      "experience": [
+        {
+          "title": "Lead Developer",
+          "company": "Innovate Labs",
+          "startDate": "2016",
+          "endDate": "Present"
+        },
+        {
+          "title": "Software Engineer",
+          "company": "Tech Solutions LLC",
+          "startDate": "2011",
+          "endDate": "2016"
+        }
+      ],
+      "education": [
+        {
+          "degree": "Bachelor of Technology",
+          "fieldOfStudy": "Information Technology",
+          "school": "Tech Institute",
+          "startDate": "2007",
+          "endDate": "2011"
+        }
+      ],
+      "projects": [
+        {"name": "Project C"},
+        {"name": "Project D"}
+      ],
+      "linkedIn": "https://linkedin.com/davidbrown",
+      "website": "https://innovatelabs.com",
+      "profilePicUrl": "https://example.com/davidbrown.jpg"
+    },
+    {
+      "id": "4",
+      "fullName": "Emily Green",
+      "email": "emily.green@example.com",
+      "phoneNumber": "+3344556677",
+      "company": "Green Tech Solutions",
+      "jobTitle": "Tech Lead",
+      "bio": "Driven by a passion for technology and innovation. Experienced in leading teams to deliver impactful solutions.",
+      "skills": ["Ruby on Rails", "PostgreSQL", "React Native", "DevOps", "Leadership"],
+      "experience": [
+        {
+          "title": "Tech Lead",
+          "company": "Green Tech Solutions",
+          "startDate": "2014",
+          "endDate": "Present"
+        },
+        {
+          "title": "Senior Software Engineer",
+          "company": "Tech Experts Ltd.",
+          "startDate": "2009",
+          "endDate": "2014"
+        }
+      ],
+      "education": [
+        {
+          "degree": "Master of Computer Applications",
+          "fieldOfStudy": "Computer Science",
+          "school": "Green University",
+          "startDate": "2005",
+          "endDate": "2009"
+        }
+      ],
+      "projects": [
+        {"name": "Project E"},
+        {"name": "Project F"}
+      ],
+      "linkedIn": "https://linkedin.com/emilygreen",
+      "website": "https://greentechsolutions.com",
+      "profilePicUrl": "https://example.com/emilygreen.jpg"
+    },
+    {
+      "id": "5",
+      "fullName": "Michael Johnson",
+      "email": "michael.johnson@example.com",
+      "phoneNumber": "+5566778899",
+      "company": "Tech Visionaries",
+      "jobTitle": "Chief Product Officer",
+      "bio": "Product strategist with a focus on delivering user-centric solutions. Leading product innovation and development.",
+      "skills": ["Product Management", "UI/UX Design", "Agile Methodologies", "Market Research", "Customer Engagement"],
+      "experience": [
+        {
+          "title": "Chief Product Officer",
+          "company": "Tech Visionaries",
+          "startDate": "2012",
+          "endDate": "Present"
+        },
+        {
+          "title": "Product Manager",
+          "company": "Tech Insights Inc.",
+          "startDate": "2007",
+          "endDate": "2012"
+        }
+      ],
+      "education": [
+        {
+          "degree": "Bachelor of Business Administration",
+          "fieldOfStudy": "Marketing",
+          "school": "Vision University",
+          "startDate": "2003",
+          "endDate": "2007"
+        }
+      ],
+      "projects": [
+        {"name": "Project G"},
+        {"name": "Project H"}
+      ],
+      "linkedIn": "https://linkedin.com/michaeljohnson",
+      "website": "https://techvisionaries.com",
+      "profilePicUrl": "https://example.com/michaeljohnson.jpg"
+    }
+  ]
+  

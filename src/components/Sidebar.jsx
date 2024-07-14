@@ -45,7 +45,7 @@ const Sidebar = ({ portal }) => {
 
   return (
 
-    <div className="sidebar bg-gradient-to-b from-[#e0c3fc] to-[#b75cff] fixed h-full">
+    <div className="sidebar bg-gradient-to-b from-[#ad5389] to-[#b75cff] fixed h-full">
       <ul className='divide-y divide-white flex flex-col h-full text-[#010312] w-40'>
         {links.map((link, index) => (
           <Link key={index} to={link.to} className=''>
