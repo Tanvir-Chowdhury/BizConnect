@@ -9,8 +9,8 @@ const EntrepreneurPortal = () => {
   return (
     <div>
       <TopBar portal="entrepreneur" />
-    <div className="flex h-screen">
-      <Sidebar portal="entrepreneur" />
+    <div className="flex">
+        <Sidebar portal="entrepreneur" />
       <div className="flex-1">
         <Outlet />
       </div>
