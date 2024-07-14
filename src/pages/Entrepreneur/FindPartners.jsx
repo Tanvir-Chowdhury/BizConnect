@@ -40,7 +40,7 @@ const FindPartners = () => {
           <input 
             type="text" 
             placeholder="Search by skills..." 
-            className="p-2 rounded-full bg-white text-gray-800 placeholder-gray-500"
+            className="p-2 px-4 rounded-full bg-white text-gray-800 placeholder-gray-500"
             value={skillFilter}
             onChange={e => setSkillFilter(e.target.value)}
           />
@@ -48,7 +48,7 @@ const FindPartners = () => {
           <input 
             type="text" 
             placeholder="Search by interests..." 
-            className="p-2 rounded-full bg-white text-gray-800 placeholder-gray-500"
+            className="p-2 px-4 rounded-full bg-white text-gray-800 placeholder-gray-500"
             value={interestFilter}
             onChange={e => setInterestFilter(e.target.value)}
           />

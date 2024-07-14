@@ -48,7 +48,7 @@ const Sidebar = ({ portal }) => {
       <ul className='divide-y divide-white flex flex-col h-full text-[#010312] w-40'>
         {links.map((link, index) => (
           <Link key={index} to={link.to} className=''>
-            <li key={index} className='border-b-2 border-t-2 border-gray-700 font-bold py-4 hover:bg-gradient-to-r hover:from-[#8b24dd] hover:to-[#ac3cc9]  w-full text-base text-center'>
+            <li key={index} className='border-b-2 border-t-2 border-gray-700 font-bold py-4 hover:text-white hover:bg-gradient-to-r hover:from-[#8b24dd] hover:to-[#ac3cc9]  w-full text-base text-center'>
               {link.text}
             </li>
           </Link>
