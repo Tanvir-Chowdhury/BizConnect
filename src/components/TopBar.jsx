@@ -31,7 +31,9 @@ const TopBar = ({portal}) => {
     })
   },[])
   return (
-    <div className="navbar bg-white w-full h-16 sticky top-0 z-50">
+
+    <div className="navbar bg-gradient-to-l from-[#b75cff] to-[#e0c3fc] w-full h-16 sticky top-0 z-50">
+
     <div className="flex-1">
     <a className="btn btn-ghost text-xl font-bold text-black mb-4">
       <img width= "200px" src="../../public/logo/BizConnect.png" alt="" />
@@ -41,7 +43,7 @@ const TopBar = ({portal}) => {
     <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle mr-4">
         <div className="indicator tooltip tooltip-bottom">
-          <span className="loading loading-ring loading-sm indicator-item badge font-bold badge-neutral text-red-500"></span>
+          <span className="loading loading-ring loading-sm indicator-item badge font-bold badge-neutral text-white"></span>
           <div className=" grid place-items-center text-black">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-8">
           <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0M3.124 7.5A8.969 8.969 0 0 1 5.292 3m13.416 0a8.969 8.969 0 0 1 2.168 4.5" />
@@ -89,7 +91,7 @@ const TopBar = ({portal}) => {
         </li>
         {/* redirect to profile for setting you can remove it */}
         <li><a href={profile}>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li><a href='/login'>Logout</a></li>
       </ul>
     </div>
   </div>

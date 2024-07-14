@@ -44,11 +44,13 @@ const Sidebar = ({ portal }) => {
 
 
   return (
-    <div className="sidebar bg-gray-800 ">
-      <ul className=''>
+
+    <div className="sidebar bg-gradient-to-b from-[#e0c3fc] to-[#b75cff] fixed h-full">
+      <ul className='divide-y divide-white flex flex-col h-full text-[#010312] w-40'>
         {links.map((link, index) => (
           <Link key={index} to={link.to} className=''>
-            <li key={index} className='border-b-2 border-gray-700 text-white py-4 hover:bg-gray-700  w-full text-base px-10'>
+            <li key={index} className='border-b-2 border-t-2 border-gray-700 font-bold py-4 hover:text-white hover:bg-gradient-to-r hover:from-[#8b24dd] hover:to-[#ac3cc9]  w-full text-base text-center'>
+
               {link.text}
             </li>
           </Link>
