@@ -16,6 +16,7 @@ import FindInvestors from './pages/Entrepreneur/FindInvestors.jsx';
 import FindMentors from './pages/Entrepreneur/FindMentors.jsx';
 import FindEmployees from './pages/Entrepreneur/FindEmployees.jsx';
 import Notifications from './pages/Entrepreneur/Notifications.jsx';
+import Login from './pages/Login.jsx';
 
 
 const router = createBrowserRouter([
@@ -64,9 +65,9 @@ const router = createBrowserRouter([
     element: <StudentPortal />,
   },
   // {
-  //   path: "/student/profile",
-  //   element: 
-  // }
+  //   path: "/login",
+  //   element: <Login></Login>,
+  // },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

@@ -91,7 +91,7 @@ const TopBar = ({portal}) => {
         </li>
         {/* redirect to profile for setting you can remove it */}
         <li><a href={profile}>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li><a href='/login'>Logout</a></li>
       </ul>
     </div>
   </div>
