@@ -30,9 +30,9 @@ const FindPartners = () => {
   }
 
   return (
-    <div className="bg-gray-950 text-gray-300">
+    <div className="bg-gray-950 text-gray-300 ml-40">
       <div className="container mx-auto pb-7">
-        <h1 className='text-center text-4xl font-bold text-white py-7'>Find Co-founders</h1>
+        <h1 className='text-center text-4xl font-bold text-[#d4a1e9] py-7'>Find Co-founders</h1>
         
         {/* Filters Section */}
         <div className="flex justify-center space-x-4 py-4">
@@ -40,7 +40,7 @@ const FindPartners = () => {
           <input 
             type="text" 
             placeholder="Search by skills..." 
-            className="p-2 rounded bg-white text-gray-800 placeholder-gray-500"
+            className="p-2 rounded-full bg-white text-gray-800 placeholder-gray-500"
             value={skillFilter}
             onChange={e => setSkillFilter(e.target.value)}
           />
@@ -48,7 +48,7 @@ const FindPartners = () => {
           <input 
             type="text" 
             placeholder="Search by interests..." 
-            className="p-2 rounded bg-white text-gray-800 placeholder-gray-500"
+            className="p-2 rounded-full bg-white text-gray-800 placeholder-gray-500"
             value={interestFilter}
             onChange={e => setInterestFilter(e.target.value)}
           />
@@ -71,12 +71,12 @@ const FindPartners = () => {
                   <section className='flex justify-between flex-row w-full'>
                     <button className="btn btn-ghost bg-gradient-to-r from-[#e9aafd] to-[#b4abfd] hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-[#462a5f] font-bold hover:text-white" onClick={() => document.getElementById(`modal${partner.id}`).showModal()}>See Details</button>
                     <dialog id={`modal${partner.id}`} className="modal">
-                      <div className="modal-box w-11/12 max-w-5xl bg-white text-black">
-                        <h3 className="font-bold text-lg">{partner.name}</h3>
+                      <div className="modal-box w-11/12 max-w-5xl bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% text-black ">
+                        <h3 className="font-bold text-lg text-white">{partner.name}</h3>
 
                         <div className="flex flex-row items-center justify-evenly">
                           <img src={partner.profile_pic} alt="" />
-                          <div className="text-base">
+                          <div className="text-base text-white">
                             <h4>Skills: {partner.skills.join(', ')}</h4>
                             <h4>Interested Field: {partner.interested_fields.join(', ')}</h4>
                             <h4>Current Employment Type: {partner.current_employment_status}</h4>
@@ -89,7 +89,7 @@ const FindPartners = () => {
                         </div>
                         <div className="modal-action">
                           <form method="dialog">
-                            <button className="btn text-black bg-gray-200 hover:bg-white hover:bg-gray-800 hover:text-gray-300">Close</button>
+                            <button className="btn btn-ghost bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-white font-bold hover:text-white">Close</button>
                           </form>
                         </div>
                       </div>
