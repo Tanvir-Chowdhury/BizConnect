@@ -18,7 +18,7 @@ const Sidebar = ({ portal }) => {
     entrepreneur: [
       { to: '/entrepreneur/profile', text: 'Profile' },
       { to: '/entrepreneur/startups', text: 'Startups' },
-      { to: '/entrepreneur/findPartners', text: 'Find Partners' },
+      { to: '/entrepreneur/findPartners', text: 'Find Co-founders' },
       { to: '/entrepreneur/findInvestors', text: 'Find Investors' },
       { to: '/entrepreneur/findMentors', text: 'Find Mentors' },
       { to: '/entrepreneur/findEmployees', text: 'Find Employees' },
@@ -34,7 +34,7 @@ const Sidebar = ({ portal }) => {
     student: [
       { to: '/student/profile', text: 'Profile' },
       { to: '/student/findJobs', text: 'Find Jobs' },
-      { to: '/student/findPartners', text: 'Find Partners' },
+      { to: '/student/findPartners', text: 'Find Co-founders' },
       { to: '/student/notifications', text: 'Notifications' },
     ],
   };
@@ -44,11 +44,11 @@ const Sidebar = ({ portal }) => {
 
 
   return (
-    <div className="sidebar bg-gray-800">
-      <ul className='divide-y divide-white'>
+    <div className="sidebar bg-gray-800 ">
+      <ul className=''>
         {links.map((link, index) => (
           <Link key={index} to={link.to} className=''>
-            <li key={index} className='border-b-2 border-gray-400 text-white py-4 hover:bg-gray-400 hover:text-gray-800 w-full text-xl px-6'>
+            <li key={index} className='border-b-2 border-gray-700 text-white py-4 hover:bg-gray-700  w-full text-base px-10'>
               {link.text}
             </li>
           </Link>
