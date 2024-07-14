@@ -15,28 +15,28 @@ const FindPartners = () => {
     return 2024-parseInt(birthYear);
   }
   return (
-    <div className="bg-white">
+    <div className="bg-[#010312]">
       <div className="container mx-auto">
-      <h1 className='text-center text-5xl font-bold text-black'>Find Partner</h1>
+      <h1 className='text-center text-5xl font-bold text-[#d2c4e6] py-6'>Find Partner</h1>
         <div className="grid grid-cols-1 md:grid-cols-2
          lg:grid-cols-3 xl:grid-cols-4 min-h-screen gap-3">
           {
             partners.map((partner)=>(
               //console.log(partner.key)
-              <div className="card bg-white shadow-xl" key={partner.id}>
+              <div className="card bg-[#221236] hover:bg-gradient-to-r hover:from-[#8b24dd] hover:to-[#ac3cc9] shadow-xl" key={partner.id}>
               <figure className="px-10 pt-10">
                 <img
                 src={partner.profile_pic}
                 alt="Profile Picture"
                 className="rounded-xl" />
               </figure>
-              <div className="card-body items-center text-center text-black">
+              <div className="card-body items-center text-center text-white">
               <h2 className="card-title">{partner.name}</h2>
               <p>Interested in <b>{partner.interested_fields.join(', ')}</b>.</p>
               <h3 className='text-xl'>Skills: <b>{partner.skills.join(', ')}</b></h3>
               {/* details */}
               <section className='flex justify-between flex-row w-full'>
-              <button className="btn btn-ghost bg-gray-300" onClick={()=>document.getElementById(`modal${partner.id}`).showModal()}>See Details</button>
+              <button className="btn btn-ghost bg-gradient-to-r from-[#e9aafd] to-[#b4abfd] hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-[#462a5f] font-bold hover:text-white" onClick={()=>document.getElementById(`modal${partner.id}`).showModal()}>See Details</button>
               <dialog id={`modal${partner.id}`} className="modal">
                 <div className="modal-box w-11/12 max-w-5xl bg-white text-black">
                   <h3 className="font-bold text-lg">{partner.name}</h3>
@@ -64,7 +64,7 @@ const FindPartners = () => {
               </dialog>
               {/* contact */}
               <div className="card-actions">
-                <button className="btn btn-ghost bg-gray-300"><a href={`mailto:${partner.email}`}>Contact</a></button>
+                <button className="btn btn-ghost bg-gradient-to-r from-[#e9aafd] to-[#b4abfd] hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-[#462a5f] font-bold hover:text-white"><a href={`mailto:${partner.email}`}>Contact</a></button>
               </div>
               </section>
               </div>

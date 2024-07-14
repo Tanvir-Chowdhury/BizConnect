@@ -44,7 +44,7 @@ const Sidebar = ({ portal }) => {
 
 
   return (
-    <div className="sidebar bg-gray-800">
+    <div className="sidebar bg-gradient-to-r from-cyan-500 to-blue-500 ">
       <ul className='divide-y divide-white'>
         {links.map((link, index) => (
           <Link key={index} to={link.to} className=''>
