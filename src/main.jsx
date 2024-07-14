@@ -23,6 +23,8 @@ import InvestorNotifications from './pages/Investor/InvestorNotifications.jsx';
 import StudentProfile from './pages/Student/StudentProfile.jsx';
 import FindJobs from './pages/Student/FindJobs.jsx';
 import StudentNotifications from './pages/Student/StudentNotifications.jsx';
+import Login from "./pages/Login.jsx"
+import Signup from './pages/Signup.jsx';
 
 
 const router = createBrowserRouter([
@@ -31,11 +33,23 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+  {
     path: "/entrepreneur",
     element: <EntrepreneurPortal />,
     children: [
       {
         path: "/entrepreneur",
+        element: <EntrepreneurProfile />,
+      },
+      {
+        path: "entrepreneur/:entrepreneurId",
         element: <EntrepreneurProfile />,
       },
       {

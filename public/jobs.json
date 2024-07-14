@@ -1,0 +1,181 @@
+{
+    "jobs": [
+      {
+        "email": "johndoe@example.com",
+        "name": "John Doe",
+        "Job_title": "Software Engineer",
+        "Job_description": "We are looking for a skilled software engineer to join our team. The candidate will be responsible for developing high-quality software solutions.",
+        "Job_requirements": [
+          "Bachelor's degree in Computer Science or related field",
+          "3+ years of experience in software development",
+          "Proficiency in JavaScript, Python, and Java",
+          "Strong problem-solving skills",
+          "Excellent communication skills"
+        ],
+        "skills": [
+          "JavaScript",
+          "Python",
+          "Java",
+          "Problem-solving",
+          "Communication"
+        ],
+        "Company_name": "Tech Innovators Inc.",
+        "deadline": "2024-08-01"
+      },
+      {
+        "email": "janesmith@example.com",
+        "name": "Jane Smith",
+        "Job_title": "Marketing Manager",
+        "Job_description": "We are seeking a dynamic marketing manager to lead our marketing efforts. The candidate will develop and implement marketing strategies to boost brand awareness.",
+        "Job_requirements": [
+          "Bachelor's degree in Marketing or Business",
+          "5+ years of experience in marketing",
+          "Proficiency in digital marketing tools",
+          "Strong leadership skills",
+          "Excellent communication and interpersonal skills"
+        ],
+        "skills": [
+          "Digital Marketing",
+          "Leadership",
+          "Strategy Development",
+          "Communication",
+          "Interpersonal Skills"
+        ],
+        "Company_name": "Creative Solutions LLC",
+        "deadline": "2024-08-15"
+      },
+      {
+        "email": "mikejohnson@example.com",
+        "name": "Mike Johnson",
+        "Job_title": "Data Analyst",
+        "Job_description": "We are looking for a data analyst to interpret data and turn it into information that can offer ways to improve a business.",
+        "Job_requirements": [
+          "Bachelor's degree in Statistics, Mathematics, or related field",
+          "2+ years of experience in data analysis",
+          "Proficiency in SQL, R, and Python",
+          "Strong analytical skills",
+          "Attention to detail"
+        ],
+        "skills": [
+          "SQL",
+          "R",
+          "Python",
+          "Analytical Skills",
+          "Attention to Detail"
+        ],
+        "Company_name": "Data Insights Co.",
+        "deadline": "2024-07-30"
+      },
+      {
+        "email": "emilybrown@example.com",
+        "name": "Emily Brown",
+        "Job_title": "Graphic Designer",
+        "Job_description": "We are seeking a creative graphic designer to create engaging and on-brand graphics for a variety of media.",
+        "Job_requirements": [
+          "Bachelor's degree in Graphic Design or related field",
+          "3+ years of experience in graphic design",
+          "Proficiency in Adobe Creative Suite",
+          "Creative thinking and problem-solving skills",
+          "Strong portfolio"
+        ],
+        "skills": [
+          "Adobe Creative Suite",
+          "Creative Thinking",
+          "Problem-solving",
+          "Graphic Design",
+          "Portfolio Development"
+        ],
+        "Company_name": "Design Studio Ltd.",
+        "deadline": "2024-08-10"
+      },
+      {
+        "email": "michaelwilson@example.com",
+        "name": "Michael Wilson",
+        "Job_title": "Product Manager",
+        "Job_description": "We are looking for an experienced product manager to lead product development and ensure the successful delivery of new products.",
+        "Job_requirements": [
+          "Bachelor's degree in Business or related field",
+          "5+ years of experience in product management",
+          "Proficiency in project management tools",
+          "Strong leadership and communication skills",
+          "Ability to work cross-functionally"
+        ],
+        "skills": [
+          "Project Management",
+          "Leadership",
+          "Communication",
+          "Cross-functional Collaboration",
+          "Product Development"
+        ],
+        "Company_name": "Innovative Products Corp.",
+        "deadline": "2024-09-01"
+      },
+      {
+        "email": "sarahlee@example.com",
+        "name": "Sarah Lee",
+        "Job_title": "Human Resources Manager",
+        "Job_description": "We are looking for an HR manager to oversee all aspects of human resources practices and processes.",
+        "Job_requirements": [
+          "Bachelor's degree in Human Resources or related field",
+          "4+ years of experience in HR management",
+          "Proficiency in HR software",
+          "Strong interpersonal and communication skills",
+          "Knowledge of labor laws"
+        ],
+        "skills": [
+          "HR Management",
+          "HR Software",
+          "Interpersonal Skills",
+          "Communication",
+          "Labor Law Knowledge"
+        ],
+        "Company_name": "People First Ltd.",
+        "deadline": "2024-08-20"
+      },
+      {
+        "email": "davidmartin@example.com",
+        "name": "David Martin",
+        "Job_title": "Sales Executive",
+        "Job_description": "We are seeking a sales executive to join our team and drive sales growth by identifying new business opportunities.",
+        "Job_requirements": [
+          "Bachelor's degree in Business or related field",
+          "3+ years of experience in sales",
+          "Proficiency in CRM software",
+          "Strong negotiation skills",
+          "Excellent communication skills"
+        ],
+        "skills": [
+          "Sales",
+          "CRM Software",
+          "Negotiation",
+          "Communication",
+          "Business Development"
+        ],
+        "Company_name": "Sales Solutions Inc.",
+        "deadline": "2024-07-25"
+      },
+      {
+        "email": "lindagarcia@example.com",
+        "name": "Linda Garcia",
+        "Job_title": "Customer Support Specialist",
+        "Job_description": "We are looking for a customer support specialist to assist our customers with product issues and provide a positive customer experience.",
+        "Job_requirements": [
+          "Bachelor's degree or equivalent experience",
+          "2+ years of experience in customer support",
+          "Proficiency in customer support software",
+          "Strong problem-solving skills",
+          "Excellent communication skills"
+        ],
+        "skills": [
+          "Customer Support",
+          "Support Software",
+          "Problem-solving",
+          "Communication",
+          "Customer Experience"
+        ],
+        "Company_name": "Customer First Inc.",
+        "deadline": "2024-07-31"
+      }
+    ]
+  }
+  
