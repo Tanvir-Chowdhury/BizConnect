@@ -41,15 +41,15 @@ const router = createBrowserRouter([
     element: <Signup />,
   },
   {
+    path: "entrepreneur/:entrepreneurId",
+    element: <EntrepreneurProfile />,
+  },
+  {
     path: "/entrepreneur",
     element: <EntrepreneurPortal />,
     children: [
       {
         path: "/entrepreneur",
-        element: <EntrepreneurProfile />,
-      },
-      {
-        path: "entrepreneur/:entrepreneurId",
         element: <EntrepreneurProfile />,
       },
       {
