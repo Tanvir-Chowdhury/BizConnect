@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 const FindStartups = () => {
     const [startups, setStartups] = useState([]);
-    const [entreProfiles, setEntreProfiles] = useState([]);
+    const [entreProfiles, setEntreProfiles] = useState({});
     const [filteredStartups, setFilteredStartups] = useState([]);
     const [nameFilter, setNameFilter] = useState('');
     const [industryFilter, setIndustryFilter] = useState('');
@@ -16,11 +16,20 @@ const FindStartups = () => {
                 setStartups(data);
                 setFilteredStartups(data);
             });
+    }, []);
 
-        // Fetch entrepreneur profiles
+    // Fetch entrepreneur profiles
+    useEffect(() => {
         fetch('/public/entrprofile.json')
             .then(res => res.json())
-            .then(data => setEntreProfiles(data));
+            .then(data => {
+                // Organize user details by email for easy lookup
+                const userDetailsMap = {};
+                data.forEach(user => {
+                    userDetailsMap[user.email] = user;
+                });
+                setEntreProfiles(userDetailsMap);
+            });
     }, []);
 
     useEffect(() => {
@@ -33,7 +42,7 @@ const FindStartups = () => {
 
     // Match startup with entrepreneur profile
     const getEntrepreneurProfile = (email) => {
-        return entreProfiles.find(profile => profile.email === email);
+        return entreProfiles[email];
     };
 
     return (
@@ -117,23 +126,23 @@ const FindStartups = () => {
                                                                 </div>
                                                                 <div>
                                                                     <h4 className="font-bold text-xl text-white">Skills</h4>
-                                                                    <p>{profile.skills.join(', ')}</p>
+                                                                    <p>{Array.isArray(profile.skills) ? profile.skills.join(', ') : ''}</p>
                                                                 </div>
                                                                 <div>
                                                                     <h4 className="font-bold text-xl text-white">Experience</h4>
-                                                                    {profile.experience.map((exp, i) => (
+                                                                    {Array.isArray(profile.experience) ? profile.experience.map((exp, i) => (
                                                                         <p key={i}>{exp.title} at {exp.company} ({exp.startDate} - {exp.endDate})</p>
-                                                                    ))}
+                                                                    )) : ''}
                                                                 </div>
                                                                 <div>
                                                                     <h4 className="font-bold text-xl text-white">Education</h4>
-                                                                    {profile.education.map((edu, i) => (
+                                                                    {Array.isArray(profile.education) ? profile.education.map((edu, i) => (
                                                                         <p key={i}>{edu.degree} in {edu.fieldOfStudy} from {edu.school} ({edu.startDate} - {edu.endDate})</p>
-                                                                    ))}
+                                                                    )) : ''}
                                                                 </div>
                                                                 <div>
                                                                     <h4 className="font-bold text-xl text-white">Projects</h4>
-                                                                    <p>{profile.projects.map(proj => proj.name).join(', ')}</p>
+                                                                    <p>{Array.isArray(profile.projects) ? profile.projects.map(proj => proj.name).join(', ') : ''}</p>
                                                                 </div>
                                                                 <div>
                                                                     <h4 className="font-bold text-xl text-white">Social Links</h4>

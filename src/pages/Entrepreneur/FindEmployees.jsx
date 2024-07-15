@@ -98,7 +98,7 @@ const FindEmployees = () => {
                 {/* <h2 className="card-title text-2xl">{student.name}</h2> */}
                 {userDetails[student.email] && (
                   <div>
-                    <h2 className='card-title text-2xl'>Name: {userDetails[student.email].name}</h2>
+                    <h2 className='card-title text-2xl'>{userDetails[student.email].name}</h2>
                   </div>
                 )}
                 <p>Interested in <b>{student.interested_fields.join(', ')}</b>.</p>
@@ -148,12 +148,17 @@ const FindEmployees = () => {
                             <p className="text-white">{student.experience}</p>
                           </div>
                           <div className="w-full lg:w-1/2">
-                            <h4 className="font-bold text-lg text-white">Age:</h4>
-                            <p className="text-white">{age(student.birth_year)}</p>
+                          {userDetails[student.email] && (
+                          <div className="mb-6">
+                            <h4 className="font-bold text-lg text-white">Age: {age(userDetails[student.email].birth_year)}</h4>
+                          </div>
+                        )}
                           </div>
                           <div className="w-full lg:w-1/2">
                             <h4 className="font-bold text-lg text-white">Highest Educational Qualification:</h4>
                             <p className="text-white">{student.highest_education_degree}</p>
+                            <h4 className="font-bold text-lg text-white">Result:</h4>
+                            <p className="text-white">CGPA/GPA: {student.last_result}</p>
                           </div>
                         </div>
 
