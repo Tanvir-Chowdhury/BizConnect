@@ -15,7 +15,7 @@ const TopBar = ({portal}) => {
   const [link,setLink]=useState('');
   const [profile,setProfile]=useState('');
   useEffect(()=>{
-    fetch('items.json')
+    fetch('/public/topBarJson/topBar.json')
     .then(res=>res.json())
     .then(data=>{
       const notificationPage=data[portal].find(item=>item.label==='Notifications');
@@ -23,7 +23,7 @@ const TopBar = ({portal}) => {
     })
   },[])
   useEffect(()=>{
-    fetch('items.json')
+    fetch('/public/topBarJson/topBar.json')
     .then(res=>res.json())
     .then(data=>{
       const profilePage=data[portal].find(item=>item.label==='Profile');
