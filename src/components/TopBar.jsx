@@ -35,8 +35,8 @@ const TopBar = ({portal}) => {
     <div className=" navbar bg-gradient-to-l from-[#ad5389] to-[#3c1053] w-full h-16 sticky top-0 z-50">
 
     <div className="flex-1">
-    <a className="btn btn-ghost text-xl font-bold text-black mb-4">
-      <img width= "200px" src="../../public/logo/BizConnect.png" alt="" />
+    <a className="text-xl font-bold text-black md:pb-2">
+      <img className='md:w-[200px] w-[120px] ml-14 md:ml-0'   src="../../public/logo/BizConnect.png" alt="" />
     </a>
     </div>
     <div className="flex-none">
