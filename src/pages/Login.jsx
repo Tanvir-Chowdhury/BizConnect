@@ -54,39 +54,6 @@ const Login = () => {
               />
             </div>
           </div>
-          {/* Role Selection */}
-          <div className="flex items-center justify-center space-x-4 mt-4">
-            <label className="text-white">
-              <input
-                type="radio"
-                value="entrepreneur"
-                checked={role === 'entrepreneur'}
-                onChange={() => setRole('entrepreneur')}
-                className="mr-1"
-              />
-              Entrepreneur
-            </label>
-            <label className="text-white">
-              <input
-                type="radio"
-                value="investor"
-                checked={role === 'investor'}
-                onChange={() => setRole('investor')}
-                className="mr-1"
-              />
-              Investor
-            </label>
-            <label className="text-white">
-              <input
-                type="radio"
-                value="student"
-                checked={role === 'student'}
-                onChange={() => setRole('student')}
-                className="mr-1"
-              />
-              Student
-            </label>
-          </div>
           {/* Submit Button */}
           <div className="flex justify-center">
             <button type="submit" className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-md mt-4">
