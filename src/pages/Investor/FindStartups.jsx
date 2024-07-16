@@ -7,6 +7,7 @@ const FindStartups = () => {
     const [filteredStartups, setFilteredStartups] = useState([]);
     const [nameFilter, setNameFilter] = useState('');
     const [industryFilter, setIndustryFilter] = useState('');
+    const [userDetails, setUserDetails] = useState({});
 
     useEffect(() => {
         // Fetch startup data
@@ -29,6 +30,20 @@ const FindStartups = () => {
                     userDetailsMap[user.email] = user;
                 });
                 setEntreProfiles(userDetailsMap);
+            });
+    }, []);
+
+    // Function to fetch user details
+    useEffect(() => {
+        fetch('/public/user.json')
+            .then(res => res.json())
+            .then(data => {
+                // Organize user details by email for easy lookup
+                const userDetailsMap = {};
+                data.forEach(user => {
+                    userDetailsMap[user.email] = user;
+                });
+                setUserDetails(userDetailsMap);
             });
     }, []);
 
@@ -78,10 +93,14 @@ const FindStartups = () => {
                                 <div className="card bg-[#221236] hover:bg-gradient-to-r hover:from-[#8b24dd] hover:to-[#ac3cc9] shadow-xl" key={index}>
                                     <div className="card-body items-center text-center ">
                                         <h2 className="card-title text-2xl">{startup.startup_name}</h2>
+                                        {userDetails[startup.email] && (
+                                            <>
+                                                <h3 className='text-lg'>Founder: <b>{userDetails[startup.email].name}</b></h3>
+                                            </>
+                                        )}
                                         {profile && (
                                             <>
-                                                <h3 className='text-lg'>Founder: <b>{profile.fullName}</b></h3>
-                                                <p>{profile.bio}</p>
+                                                <p>{profile.introduction}</p>
                                             </>
                                         )}
                                         <h3 className='text-lg'>Industry: <b>{startup.industry}</b></h3>
@@ -106,7 +125,7 @@ const FindStartups = () => {
                                                                 <p>Funding Goal: ${startup.funding_goal}</p>
                                                                 <p>Current Funding: ${startup.current_funding}</p>
                                                                 <p>Open for Fund Raising: {startup.open_for_fund_raising ? "Yes" : "No"}</p>
-                                                                <p>Date: {startup.date}</p>
+                                                                <p>Funding Date: {startup.date}</p>
                                                             </div>
                                                             <div>
                                                                 <h4 className="font-bold text-xl text-white">Contact Information</h4>
@@ -116,13 +135,16 @@ const FindStartups = () => {
                                                         {/* Right Column */}
                                                         {profile && (
                                                             <div className="space-y-4">
-                                                                <div className="flex flex-col items-center">
-                                                                    <h4 className="font-bold text-2xl text-white">{profile.fullName}</h4>
-                                                                    <p className="text-gray-300">{profile.jobTitle} at {profile.company}</p>
+                                                                <div>
+                                                                    {userDetails[startup.email] && (
+                                                                        <>
+                                                                            <h3 className='text-2xl'>Founder: <b>{userDetails[startup.email].name}</b></h3>
+                                                                        </>
+                                                                    )}
                                                                 </div>
                                                                 <div>
                                                                     <h4 className="font-bold text-xl text-white">Bio</h4>
-                                                                    <p>{profile.bio}</p>
+                                                                    <p>{profile.introduction}</p>
                                                                 </div>
                                                                 <div>
                                                                     <h4 className="font-bold text-xl text-white">Skills</h4>
@@ -130,19 +152,7 @@ const FindStartups = () => {
                                                                 </div>
                                                                 <div>
                                                                     <h4 className="font-bold text-xl text-white">Experience</h4>
-                                                                    {Array.isArray(profile.experience) ? profile.experience.map((exp, i) => (
-                                                                        <p key={i}>{exp.title} at {exp.company} ({exp.startDate} - {exp.endDate})</p>
-                                                                    )) : ''}
-                                                                </div>
-                                                                <div>
-                                                                    <h4 className="font-bold text-xl text-white">Education</h4>
-                                                                    {Array.isArray(profile.education) ? profile.education.map((edu, i) => (
-                                                                        <p key={i}>{edu.degree} in {edu.fieldOfStudy} from {edu.school} ({edu.startDate} - {edu.endDate})</p>
-                                                                    )) : ''}
-                                                                </div>
-                                                                <div>
-                                                                    <h4 className="font-bold text-xl text-white">Projects</h4>
-                                                                    <p>{Array.isArray(profile.projects) ? profile.projects.map(proj => proj.name).join(', ') : ''}</p>
+                                                                    <p>{profile.experience}</p>
                                                                 </div>
                                                                 <div>
                                                                     <h4 className="font-bold text-xl text-white">Social Links</h4>
