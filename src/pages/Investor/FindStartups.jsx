@@ -154,13 +154,18 @@ const FindStartups = () => {
                                                                     <h4 className="font-bold text-xl text-white">Experience</h4>
                                                                     <p>{profile.experience}</p>
                                                                 </div>
-                                                                <div>
-                                                                    <h4 className="font-bold text-xl text-white">Social Links</h4>
-                                                                    <p>LinkedIn: <a href={profile.linkedIn} target="_blank" rel="noopener noreferrer" className="text-gray-200">{profile.linkedIn}</a></p>
-                                                                    <p>Website: <a href={profile.website} target="_blank" rel="noopener noreferrer" className="text-gray-200">{profile.website}</a></p>
-                                                                </div>
+                                                                {userDetails[startup.email] && (
+                                                                    <>
+                                                                        <div>
+                                                                            <h4 className="font-bold text-xl text-white">Social Links</h4>
+                                                                            <p>LinkedIn: <a href={userDetails[startup.email].linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-200">{userDetails[startup.email].linkedin}}</a> </p>
+                                                                            <p>Website: <a href={userDetails[startup.email].website} target="_blank" rel="noopener noreferrer" className="text-gray-200">{userDetails[startup.email].website} </a></p>
+                                                                        </div></>
+                                                                )}
+
                                                             </div>
                                                         )}
+
                                                     </div>
                                                     <div className="modal-action mt-4">
                                                         <button className="btn btn-ghost bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-white font-bold" onClick={() => document.getElementById(`modal${index}`).close()}>Close</button>

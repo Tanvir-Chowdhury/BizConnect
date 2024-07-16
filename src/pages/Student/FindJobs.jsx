@@ -11,8 +11,8 @@ const FindJobs = () => {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        setJobs(data.jobs);
-        setFilteredJobs(data.jobs);
+        setJobs(data);
+        setFilteredJobs(data);
       });
   }, []);
 
@@ -24,7 +24,7 @@ const FindJobs = () => {
   }, [skillFilter, jobs]);
 
   return (
-    <div className="bg-gray-950 text-gray-300 ml-40 h-full pt-6">
+    <div className="bg-gray-950 text-gray-300 ml-40  pt-6">
       <div className="container mx-auto pb-7">
         <h1 className='text-center text-4xl font-bold text-[#d4a1e9] py-7'>Find Jobs</h1>
         
