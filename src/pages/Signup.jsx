@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 // import { useHistory } from 'react-router-dom';
 // import { useAuth } from '../context/authContext';
 // import { roles } from '../services/authService';
 
 import logo from '../../public/logo/BizConnect.png'; // Replace with your actual logo file path
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
   const [fullName, setFullName] = useState('');
@@ -26,7 +27,7 @@ const Signup = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-700">
       <div className="bg-gray-900 p-8 my-7 rounded-lg shadow-md w-full max-w-xl">
-        <img src={logo} alt="Website Logo" className="h-16 mb-4 mx-auto" /> {/* Logo */}
+        <Link to='/'><img src={logo} alt="Website Logo" className="h-16 mb-4 mx-auto" /></Link> {/* Logo */}
         <h2 className="text-2xl font-bold mb-4 text-center text-gray-300">Signup</h2>
         <form onSubmit={handleSignup}>
           <div className="mb-4">
