@@ -1,5 +1,5 @@
 // pages/Login.js
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useContext } from 'react';
 // import { AuthContext } from '../context/authContext';
 

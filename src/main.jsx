@@ -25,6 +25,8 @@ import FindJobs from './pages/Student/FindJobs.jsx';
 import StudentNotifications from './pages/Student/StudentNotifications.jsx';
 import Login from "./pages/Login.jsx"
 import Signup from './pages/Signup.jsx';
+import AuthProvider from './auth/AuthProvider.jsx';
+import Info from './pages/Info.jsx';
 
 
 const router = createBrowserRouter([
@@ -39,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/info/:role",
+    element: <Info />,
   },
   {
     path: "entrepreneur/:entrepreneurId",
@@ -138,6 +144,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    <AuthProvider>
     <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );
