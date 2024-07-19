@@ -47,10 +47,6 @@ const router = createBrowserRouter([
     element: <Info />,
   },
   {
-    path: "entrepreneur/:entrepreneurId",
-    element: <EntrepreneurProfile />,
-  },
-  {
     path: "/entrepreneur",
     element: <EntrepreneurPortal />,
     children: [

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import logo from "../../public/logo/BizConnect.png";
 import { useContext, useState } from "react";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
@@ -15,8 +15,7 @@ const Info = () => {
   const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const axiosPublic = useAxiosPublic();
-    
-
+    const navigate = useNavigate()
     
 
     const [postError, setPostError] = useState(false);
@@ -71,7 +70,15 @@ const Info = () => {
     }); 
 
     const handleNavigation = ()=>{
-        console.log("navigate")
+        if(role==='student'){
+            navigate('/student')
+        }
+        if(role==='investor'){
+            navigate('/investor')
+        }
+        if(role==='entrepreneur'){
+            navigate('/entrepreneur')
+        }
     }
 
     const handleCommonSubmit = async() => {
@@ -91,7 +98,7 @@ const Info = () => {
     }
 
     const hanldeSudentSubmit = async() => {
-        const res = await axiosPublic.post(`/students`, {
+        await axiosPublic.post(`/students`, {
             email: user?.email,
             major: studentData.major,
             graduation_year: studentData.graduation_year,
@@ -104,17 +111,15 @@ const Info = () => {
             last_result: studentData.last_result,
             open_for_employment: studentData.open_for_employment,
             date: new Date().toISOString()
-        });
-        if (res.status !== 201){
+        })
+        .catch(()=>{
             setPostError(true);
-            setLoading(false);
-        }else{
-            setLoading(false);
-        }
+        })
+        setLoading(false)
     }
 
     const hanldeInvestorSubmit = async() => {
-        const res = await axiosPublic.post(`/investors`, {
+        await axiosPublic.post(`/investors`, {
             email: user?.email,
             interested_fields: investorData.interested_fields,
             skills: investorData.skills,
@@ -125,17 +130,15 @@ const Info = () => {
             open_for_investments: investorData.open_for_investments,
             open_for_mentorship: investorData.open_for_mentorship,
             date: new Date().toISOString()
-        });
-        if (res.status !== 201){
+        })
+        .catch(()=>{
             setPostError(true);
-            setLoading(false);
-        }else{
-            setLoading(false);
-        }
+        })
+        setLoading(false)
     }
 
     const hanldeEntrepreneurSubmit = async() => {
-        const res = await axiosPublic.post(`/entrepreneurs`, {
+        await axiosPublic.post(`/entrepreneurs`, {
             email: user?.email,
             industry: entrepreneurData.industry,
             introduction: entrepreneurData.introduction,
@@ -148,13 +151,11 @@ const Info = () => {
             company_names: entrepreneurData.company_names,
             open_for_partnership: entrepreneurData.open_for_partnership,
             date: new Date().toISOString()
-        });
-        if (res.status !== 201){
+        })
+        .catch(()=>{
             setPostError(true);
-            setLoading(false);
-        }else{
-            setLoading(false);
-        }
+        })
+        setLoading(false)
     }    
 
     
@@ -357,6 +358,7 @@ const Info = () => {
                </h2>
             
             {postError? <button className="w-full flex justify-center items-center text-4xl text-white hover:translate-y-1" onClick={()=>{
+                    setPostError(false)
                     setCurrent(arr[2])
                 }}>
                     <FaArrowLeftLong /></button>: <button
