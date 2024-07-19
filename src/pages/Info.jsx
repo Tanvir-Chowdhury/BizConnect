@@ -1,16 +1,26 @@
 import { useParams } from "react-router-dom";
 import logo from "../../public/logo/BizConnect.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import PropTypes from "prop-types";
 import { MdError } from "react-icons/md";
-
+import CreatableSelect from 'react-select/creatable';
+import useAxiosPublic from "../hooks/useAxiosPublic";
+import { AuthContext } from "../auth/AuthProvider";
 const Info = () => {
   const { role } = useParams();
+  const { user } = useContext(AuthContext);
   const arr = ["initial", "common-part", "uncommon-part", "final"];
   const [current, setCurrent] = useState(arr[0]);
   const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const axiosPublic = useAxiosPublic();
+    
+
+    
+
+    const [postError, setPostError] = useState(false);
+    console.log(postError)
   //form datas
   const [commonData, setCommonData] = useState({
     birth_year: "",
@@ -18,6 +28,7 @@ const Info = () => {
     birth_month: "",
     linkedin: "",
     website: "",
+    gender: "male",
   });
 
   const [studentData, setStudentData] = useState({
@@ -28,7 +39,7 @@ const Info = () => {
     interested_fields: [],
     experience: "",
     current_employment_status: false, //true or false
-    highest_education_degree: "", //ssc, hsc, undergrad
+    highest_education_degree: "undergrad", //ssc, hsc, undergrad
     last_result: 0, //out of 4 float
     open_for_employment: true, //true or false
   });
@@ -54,18 +65,98 @@ const Info = () => {
     skills: [],
     interested_fields: [],
     experience: "",
-    total_fund_raised: "",
+    total_fund_raised: 0,
     company_names: [],
     open_for_partnership: true,
     }); 
 
-    const hanldeSubmit = () => {
-        setLoading(true);
-        console.log(commonData);
-        console.log(studentData);
-        console.log(investorData);
-        console.log(entrepreneurData);
+    const handleNavigation = ()=>{
+        console.log("navigate")
     }
+
+    const handleCommonSubmit = async() => {
+        setLoading(true);
+        await axiosPublic.patch(`/users/${user?.email}`, {
+            birth_year: parseInt(commonData.birth_year),
+            birth_day: parseInt(commonData.birth_day),
+            birth_month: parseInt(commonData.birth_month),
+            linkedin: commonData.linkedin,
+            website: commonData.website,
+            gender: commonData.gender
+        })
+        .catch(() => {
+            setPostError(true);
+            setLoading(false)
+        })
+    }
+
+    const hanldeSudentSubmit = async() => {
+        const res = await axiosPublic.post(`/students`, {
+            email: user?.email,
+            major: studentData.major,
+            graduation_year: studentData.graduation_year,
+            introduction: studentData.introduction,
+            skills: studentData.skills,
+            interested_fields: studentData.interested_fields,
+            experience: studentData.experience,
+            current_employment_status: studentData.current_employment_status,
+            highest_education_degree: studentData.highest_education_degree,
+            last_result: studentData.last_result,
+            open_for_employment: studentData.open_for_employment,
+            date: new Date().toISOString()
+        });
+        if (res.status !== 201){
+            setPostError(true);
+            setLoading(false);
+        }else{
+            setLoading(false);
+        }
+    }
+
+    const hanldeInvestorSubmit = async() => {
+        const res = await axiosPublic.post(`/investors`, {
+            email: user?.email,
+            interested_fields: investorData.interested_fields,
+            skills: investorData.skills,
+            experience: investorData.experience,
+            introduction: investorData.introduction,
+            total_investments: investorData.total_investments,
+            company_names: investorData.company_names,
+            open_for_investments: investorData.open_for_investments,
+            open_for_mentorship: investorData.open_for_mentorship,
+            date: new Date().toISOString()
+        });
+        if (res.status !== 201){
+            setPostError(true);
+            setLoading(false);
+        }else{
+            setLoading(false);
+        }
+    }
+
+    const hanldeEntrepreneurSubmit = async() => {
+        const res = await axiosPublic.post(`/entrepreneurs`, {
+            email: user?.email,
+            industry: entrepreneurData.industry,
+            introduction: entrepreneurData.introduction,
+            current_employment_status: entrepreneurData.current_employment_status,
+            job_title: entrepreneurData.job_title,
+            skills: entrepreneurData.skills,
+            interested_fields: entrepreneurData.interested_fields,
+            experience: entrepreneurData.experience,
+            total_fund_raised: entrepreneurData.total_fund_raised,
+            company_names: entrepreneurData.company_names,
+            open_for_partnership: entrepreneurData.open_for_partnership,
+            date: new Date().toISOString()
+        });
+        if (res.status !== 201){
+            setPostError(true);
+            setLoading(false);
+        }else{
+            setLoading(false);
+        }
+    }    
+
     
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-700">
@@ -153,6 +244,21 @@ const Info = () => {
                   }
                 />
               </div>
+                <div className="mb-4">
+                <label className="block mb-2 text-gray-400">
+                    Gender
+                </label>
+                <select
+                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
+                onChange={(e) => setCommonData({...commonData, gender: e.target.value})}
+                defaultValue={commonData.gender}
+                >
+                <option value={"male"}>Male</option>
+                <option value={"female"}>Female</option>
+                <option value={"other"}>Other</option>
+                </select>
+
+                </div>
               {error && <p className="text-red-500 w-full text-center font-thin flex justify-center items-center gap-2">{error}<MdError />
               </p>}
               <div className="flex flex-row justify-between items-center mt-6">
@@ -184,9 +290,10 @@ const Info = () => {
         {current === "uncommon-part" && (
           <div className="w-full max-w-xl">
             <div>
-              {role === "student" && <StudentForm/>}
-                {role === "investor" && <InvestorForm/>}
+              {role === "student" && <StudentForm studentData={studentData} setStudentData={setStudentData}/>}
+                {role === "investor" && <InvestorForm investorData={investorData} setInvestorData={setInvestorData}/>}
                 {role === "entrepreneur" && <EntrepreneurForm entrepreneurData={entrepreneurData} setEntrepreneurData={setEntrepreneurData} />}
+                {error && <p className="text-red-500 w-full text-center font-thin flex justify-center items-center gap-2">{error}<MdError /></p>}
               <div className="flex flex-row justify-between items-center mt-6 gap-28">
                 <button
                   className=" flex justify-center items-center text-4xl text-white hover:translate-y-1"
@@ -196,7 +303,37 @@ const Info = () => {
                 </button>
                 <button
                   className=" flex justify-center items-center text-4xl text-white hover:translate-y-1"
-                  onClick={() => setCurrent(arr[3])}
+                  onClick={() =>{
+                    if(role === "student" && studentData.major && studentData.graduation_year && studentData.introduction && studentData.skills.length>0 && studentData.interested_fields.length>0 &&  studentData.highest_education_degree && studentData.last_result){
+                        setError(null)
+                        setCurrent(arr[3])
+                        handleCommonSubmit();
+                        if (!postError){
+                            hanldeSudentSubmit();
+                        }
+                        
+                    }
+                    else if(role === "investor" && investorData.interested_fields.length>0 && investorData.skills.length>0 && investorData.introduction && investorData.company_names.length>0){
+                        setError(null)
+                      setCurrent(arr[3])
+                      handleCommonSubmit();
+                      if (!postError){
+                        hanldeInvestorSubmit();
+                    }
+                        
+                    }
+                    else if(role === "entrepreneur" && entrepreneurData.industry && entrepreneurData.introduction && entrepreneurData.skills.length>0 && entrepreneurData.interested_fields.length>0){
+                        setError(null)
+                      setCurrent(arr[3])
+                      handleCommonSubmit();
+                      if (!postError){
+                        hanldeEntrepreneurSubmit();
+                    }
+                        
+                    }
+                    else{
+                      setError("Please fill all the fields")
+                    } }}
                 >
                   <FaArrowRightLong />
                 </button>
@@ -210,21 +347,25 @@ const Info = () => {
           <div className="w-full max-w-xl">
             <div>
             <h2 className="text-xl font-thin mb-4 text-center text-gray-300">
-              Thanks for the valuable info.
+              {postError?<span className="text-2xl font-medium text-red-500">Error Saving Data</span>:"Thanks for the valuable info."}
               <br />
-              It will help us personalize your experience.
+              {postError?"Please try again":"It will help us personalize your experience."}
               <br />
               <br />
-              <span className="text-2xl font-medium">Go to Dashboard</span>
-            </h2>
+              {postError? <span className="text-2xl font-medium">Resubmit the form</span>
+                : <span className="text-2xl font-medium">Go to Dashboard</span>}
+               </h2>
             
-                <button
+            {postError? <button className="w-full flex justify-center items-center text-4xl text-white hover:translate-y-1" onClick={()=>{
+                    setCurrent(arr[2])
+                }}>
+                    <FaArrowLeftLong /></button>: <button
                   className="w-full flex justify-center items-center text-4xl text-white hover:translate-y-1"
-                  onClick={hanldeSubmit}
+                  onClick={()=>handleNavigation()}
                 >
-                    {loading ? "Loading..." :  <FaArrowRightLong />}
-                 
-                </button>
+                    {loading ? <span className="loading loading-ball loading-lg"></span> :  <FaArrowRightLong />}
+                </button>}
+                
             </div>
           </div>
         )}
@@ -235,22 +376,228 @@ const Info = () => {
 
 export default Info;
 
+const skillOptions = [
+    { value: 'react', label: 'react'},
+    { value: 'vue', label: 'vue'},
+    { value: 'angular', label: 'angular'},
+    { value: 'vscode', label: 'vscode'},
+    { value: 'tailwind', label: 'tailwind'},
+    { value: 'bootstrap', label: 'bootstrap'},
+    { value: 'material-ui', label: 'material-ui'},
+    { value: 'chakra-ui', label: 'chakra-ui'},
+    { value: 'redux', label: 'redux'},
+    { value: 'context-api', label: 'context-api'},
+    { value: 'nextjs', label: 'nextjs'},
+    { value: 'gatsby', label: 'gatsby'},
+    { value: 'nodejs', label: 'nodejs'},
+    { value: 'express', label: 'express'},
+    { value: 'flask', label: 'flask'},
+    { value: 'django', label: 'django'},
+    { value: 'laravel', label: 'laravel'},
+    { value: 'spring', label: 'spring'},
+    { value: 'rails', label: 'rails'},
+  ];
+const fieldOptions = [
+    { value: 'web development', label: 'web development'},
+    { value: 'app development', label: 'app development'},
+    { value: 'game development', label: 'game development'},
+    { value: 'ui/ux', label: 'ui/ux'},
+    { value: 'data science', label: 'data science'},
+    { value: 'machine learning', label: 'machine learning'},
+    { value: 'artificial intelligence', label: 'artificial intelligence'},
+    { value: 'cyber security', label: 'cyber security'},
+    { value: 'networking', label: 'networking'},
+    { value: 'cloud computing', label: 'cloud computing'},
+    { value: 'devops', label: 'devops'},
+    ];
 
-const StudentForm = () => {
+
+const StudentForm = ({studentData, setStudentData}) => {
     return (
         <div>
-            Student
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Major</label>
+                <input
+                type="text"
+                name='major'
+                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
+                onChange={(e) => setStudentData({...studentData, major: e.target.value})}
+                defaultValue={studentData.major}
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Graduation Year (or Expected) </label>
+                <input
+                type="number"
+                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
+                onChange={(e) => setStudentData({...studentData, graduation_year: parseInt(e.target.value)})}
+                defaultValue={studentData.graduation_year}
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Introduction</label>
+                <textarea
+                name='introduction'
+                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
+                onChange={(e) => setStudentData({...studentData, introduction: e.target.value})}
+                defaultValue={studentData.introduction}
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Skills</label>
+                <CreatableSelect isMulti options={skillOptions} defaultValue={studentData.skills.map((val)=>{
+                    return {"value": val, "label":val}
+                })} onChange={(e) => setStudentData({...studentData, skills: e.map((item) => item.value)})}/>
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Interested Fields</label>
+                <CreatableSelect isMulti options={fieldOptions} defaultValue={studentData.interested_fields.map((val)=>{
+                    return {"value": val, "label":val}
+                })} onChange={(e) => setStudentData({...studentData, interested_fields: e.map((item) => item.value)})}/>
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Experience(Optional)</label>
+                <input
+                type="text"
+                name='experience'
+                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
+                onChange={(e) => setStudentData({...studentData, experience: e.target.value})}
+                defaultValue={studentData.experience}
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Current Employment Status</label>
+                <select
+                name='current_employment_status'
+                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
+                onChange={() => 
+                    setStudentData({...studentData, current_employment_status: !studentData.current_employment_status})}
+                defaultValue={studentData.current_employment_status}
+                >
+                <option value={true}>Employed</option>
+                <option value={false}>Unemployed</option>
+                </select>
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Highest Education Degree</label>
+                <select
+                name='highest_education_degree'
+                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
+                onChange={(e) => setStudentData({...studentData, highest_education_degree: e.target.value})}
+                defaultValue={studentData.highest_education_degree}
+                >
+                <option value='ssc'>SSC</option>
+                <option value='hsc'>HSC</option>
+                <option value='undergrad'>Undergrad</option>
+                <option value='msc'>Msc</option>
+                </select>
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Last Result</label>
+                <input
+                type="number"
+                name='last_result'
+                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
+                onChange={(e) => setStudentData({...studentData, last_result: parseFloat(e.target.value)})}
+                defaultValue={studentData.last_result}
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Open for Employment</label>
+                <select
+                name='open_for_employment'
+                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
+                onChange={() => setStudentData({...studentData, open_for_employment: !studentData.open_for_employment})}
+                defaultValue={studentData.open_for_employment}
+                >
+                <option value={true}>Yes</option>
+                <option value={false}>No</option>
+                </select>
+            </div>
+
+            
         </div>
     )
 }
 
-const InvestorForm = () => {
+StudentForm.propTypes = {
+    studentData: PropTypes.object,
+    setStudentData: PropTypes.func,
+};
+
+const InvestorForm = ({investorData, setInvestorData}) => {
     return (
         <div>
-            Investor
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Introduction</label>
+                <textarea
+                name='introduction'
+                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
+                required
+                onChange={(e) => setInvestorData({...investorData, introduction: e.target.value})}
+                defaultValue={investorData.introduction}
+                />
+            </div>
+            <div className="mb-4"> 
+                <label className="block mb-2 text-gray-400">Skills</label>
+                <CreatableSelect isMulti options={skillOptions} defaultValue={investorData.skills.map((val)=> {
+                    return {"value": val, "label":val}
+                })} onChange={(e) => setInvestorData({...investorData, skills: e.map((item) => item.value)})}/>
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Interested Fields</label>
+                <CreatableSelect isMulti options={fieldOptions} defaultValue={investorData.interested_fields.map((val)=>{
+                    return {"value": val, "label":val}
+                })} onChange={(e) => setInvestorData({...investorData, interested_fields: e.map((item) => item.value)})}/>
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Experience(Optional)</label>
+                <input
+                type="text"
+                name='experience'
+                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
+                defaultValue={investorData.experience}
+                onChange={(e) => setInvestorData({...investorData, experience: e.target.value})}
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Company Names(Optional)</label>
+                <CreatableSelect isMulti defaultValue={investorData.company_names.map((val)=>{
+                    return {"value": val, "label":val}
+                })} onChange={(e) => setInvestorData({...investorData, company_names: e.map((item) => item.value)})}/>
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Open for Investments</label>
+                <select
+                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
+                onChange={() => setInvestorData({...investorData, open_for_investments: !investorData.open_for_investments})}
+                defaultValue={investorData.open_for_investments}
+                >
+                <option value={true}>Yes</option>
+                <option value={false}>No</option>
+                </select>
+            </div>
+            <div className="mb-4">
+                <label className="block mb-2 text-gray-400">Open for Mentorship</label>
+                <select
+                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
+                onChange={() => setInvestorData({...investorData, open_for_mentorship: !investorData.open_for_mentorship})}
+                defaultValue={investorData.open_for_mentorship}
+                >
+                <option value={true}>Yes</option>
+                <option value={false}>No</option>
+                </select>
+            </div>
         </div>
     )
 }
+
+InvestorForm.propTypes = {
+    investorData: PropTypes.object,
+    setInvestorData: PropTypes.func,
+};
+
+
 
 const EntrepreneurForm = ({entrepreneurData,setEntrepreneurData}) => {
     return (
@@ -262,8 +609,8 @@ const EntrepreneurForm = ({entrepreneurData,setEntrepreneurData}) => {
                 type="text"
                 name='industry'
                 className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
-                required
                 onChange={(e) => setEntrepreneurData({...entrepreneurData, industry: e.target.value})}
+                defaultValue={entrepreneurData.industry}
                 />
             </div>
             <div className="mb-4">
@@ -273,6 +620,7 @@ const EntrepreneurForm = ({entrepreneurData,setEntrepreneurData}) => {
                 className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
                 required
                 onChange={(e) => setEntrepreneurData({...entrepreneurData, introduction: e.target.value})}
+                defaultValue={entrepreneurData.introduction}
                 />
             </div>
             <div className="mb-4">
@@ -280,80 +628,60 @@ const EntrepreneurForm = ({entrepreneurData,setEntrepreneurData}) => {
                 <select
                 name='current_employment_status'
                 className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
-                required
-                onChange={(e) => setEntrepreneurData({...entrepreneurData, current_employment_status: e.target.value})}
+                onChange={() => 
+                    setEntrepreneurData({...entrepreneurData, current_employment_status: !entrepreneurData.current_employment_status})}
+                defaultValue={entrepreneurData.current_employment_status}
                 >
                 <option value={true}>Employed</option>
                 <option value={false}>Unemployed</option>
                 </select>
             </div>
-            <div className="mb-4">
+            {
+                entrepreneurData.current_employment_status && <div className="mb-4">
                 <label className="block mb-2 text-gray-400">Job Title</label>
                 <input
                 type="text"
                 name='job_title'
                 className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
-                required
                 onChange={(e) => setEntrepreneurData({...entrepreneurData, job_title: e.target.value})}
+                defaultValue={entrepreneurData.job_title}
                 />
             </div>
-            <div className="mb-4">
+            }
+            <div className="mb-4"> 
                 <label className="block mb-2 text-gray-400">Skills</label>
-                <input
-                type="text"
-                name='skills'
-                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
-                required
-                onChange={(e) => setEntrepreneurData({...entrepreneurData, skills: e.target.value})}
-                />
+                <CreatableSelect isMulti options={skillOptions} defaultValue={entrepreneurData.skills.map((val)=> {
+                    return {"value": val, "label":val}
+                })} onChange={(e) => setEntrepreneurData({...entrepreneurData, skills: e.map((item) => item.value)})}/>
             </div>
             <div className="mb-4">
                 <label className="block mb-2 text-gray-400">Interested Fields</label>
-                <input
-                type="text"
-                name='interested_fields'
-                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
-                required
-                onChange={(e) => setEntrepreneurData({...entrepreneurData, interested_fields: e.target.value})}
-                />
+                <CreatableSelect isMulti options={fieldOptions} defaultValue={entrepreneurData.interested_fields.map((val)=>{
+                    return {"value": val, "label":val}
+                })} onChange={(e) => setEntrepreneurData({...entrepreneurData, interested_fields: e.map((item) => item.value)})}/>
             </div>
             <div className="mb-4">
-                <label className="block mb-2 text-gray-400">Experience</label>
+                <label className="block mb-2 text-gray-400">Experience(Optional)</label>
                 <input
                 type="text"
                 name='experience'
                 className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
-                required
+                defaultValue={entrepreneurData.experience}
                 onChange={(e) => setEntrepreneurData({...entrepreneurData, experience: e.target.value})}
                 />
             </div>
             <div className="mb-4">
-                <label className="block mb-2 text-gray-400">Total Fund Raised</label>
-                <input
-                type="text"
-                name='total_fund_raised'
-                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
-                required
-                onChange={(e) => setEntrepreneurData({...entrepreneurData, total_fund_raised: e.target.value})}
-                />
-            </div>
-            <div className="mb-4">
-                <label className="block mb-2 text-gray-400">Company Names</label>
-                <input
-                type="text"
-                name='company_names'
-                className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
-                required
-                onChange={(e) => setEntrepreneurData({...entrepreneurData, company_names: e.target.value})}
-                />
+                <label className="block mb-2 text-gray-400">Company Names(Optional)</label>
+                <CreatableSelect isMulti defaultValue={entrepreneurData.company_names.map((val)=>{
+                    return {"value": val, "label":val}
+                })} onChange={(e) => setEntrepreneurData({...entrepreneurData, company_names: e.map((item) => item.value)})}/>
             </div>
             <div className="mb-4">
                 <label className="block mb-2 text-gray-400">Open for Partnership</label>
                 <select
-                name='open_for_partnership'
                 className="w-full bg-gray-800 p-2 border rounded focus:outline-none focus:border-purple-500 text-white"
-                required
-                onChange={(e) => setEntrepreneurData({...entrepreneurData, open_for_partnership: e.target.value})}
+                onChange={() => setEntrepreneurData({...entrepreneurData, open_for_partnership: !entrepreneurData.open_for_partnership})}
+                defaultValue={entrepreneurData.open_for_partnership}
                 >
                 <option value={true}>Yes</option>
                 <option value={false}>No</option>
