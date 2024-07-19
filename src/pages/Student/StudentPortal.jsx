@@ -1,5 +1,3 @@
-// pages/StudentPortal.js
-import React from 'react';
 import TopBar from '../../components/TopBar';
 import Sidebar from '../../components/Sidebar';
 import { Outlet } from 'react-router-dom';

@@ -1,12 +1,34 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../public/logo/BizConnect.png'; 
 import { useContext, useState } from 'react';
 import { AuthContext } from '../auth/AuthProvider';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 const Login = () => {
-  const { logInWithEmailPass} = useContext(AuthContext)
+  const { user, logInWithEmailPass} = useContext(AuthContext)
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
+  const axiosPublic = useAxiosPublic()
+  const navigate = useNavigate()
+
+  const getRole = async()=>{
+    try {
+      const response = await axiosPublic.get(`/users/role/${user?.email}`);
+      return response.data;
+    } catch (error) {
+      setError("Error getting credentilas");
+      return null
+    }
+  }
+
+  const getData = async(role)=>{
+    try {
+      const response = await axiosPublic.get(`/data/${role}/${user?.email}`);
+      return response.data;
+    } catch (error) {
+      return null
+    }
+  }
   
 
   const handleSubmit = async(e) => {
@@ -19,8 +41,26 @@ const Login = () => {
         .then(() => {
           setError(false);
           setLoading(false)
-          //if data-> dashboard
-          //else -> info
+          const role = getRole() 
+
+          if (role !== null){
+            const data = getData(role)
+            if (data === null){
+              navigate(`/info/${role}`)
+            }
+            else{
+              if(role==='student'){
+                navigate('/student')
+            }
+              if(role==='investor'){
+                navigate('/investor')
+            }
+              if(role==='entrepreneur'){
+                navigate('/entrepreneur')
+            }
+            }
+          }
+          
         })
         .catch((err) => {
           setError(err.message);
