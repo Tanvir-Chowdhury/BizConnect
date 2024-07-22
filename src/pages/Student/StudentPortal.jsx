@@ -6,7 +6,7 @@ const StudentPortal = () => {
   return (
     <div>
       <TopBar portal="entrepreneur" />
-    <div className="flex h-screen">
+    <div className="flex min-h-screen">
       <Sidebar portal="student" />
       <div className="flex-1">
         <Outlet />

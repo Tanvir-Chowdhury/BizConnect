@@ -12,8 +12,8 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const axiosPublic = useAxiosPublic();
-    console.log(user);
 
+    const [editing, setEditing] = useState(false)
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) =>{
             setUser(currentUser);
@@ -54,6 +54,8 @@ return (
         logInWithEmailPass,
         logOut,
         profileUpdate,
+        editing,
+        setEditing
         }}>
       {children}
     </AuthContext.Provider>

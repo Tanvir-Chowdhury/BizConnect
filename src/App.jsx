@@ -1,8 +1,5 @@
-// src/App.js
-import React from 'react';
 import './App.css';
-import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaBriefcase, FaArrowRight, FaUsers, FaHandshake } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 

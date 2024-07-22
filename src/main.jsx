@@ -19,10 +19,8 @@ import InvestorProfile from './pages/Investor/InvestorProfile.jsx';
 import FindStartups from './pages/Investor/FindStartups.jsx';
 import FindMentees from './pages/Investor/FindMentees.jsx';
 import EntrepreneurNotifications from './pages/Entrepreneur/EntrepreneurNotifications.jsx';
-import InvestorNotifications from './pages/Investor/InvestorNotifications.jsx';
 import StudentProfile from './pages/Student/StudentProfile.jsx';
 import FindJobs from './pages/Student/FindJobs.jsx';
-import StudentNotifications from './pages/Student/StudentNotifications.jsx';
 import Login from "./pages/Login.jsx"
 import Signup from './pages/Signup.jsx';
 import AuthProvider from './auth/AuthProvider.jsx';
@@ -78,10 +76,6 @@ const router = createBrowserRouter([
         path: "/entrepreneur/findMentors",
         element: <FindMentors />,
       },
-      {
-        path: "/entrepreneur/notifications",
-        element: <EntrepreneurNotifications /> ,
-      },
     ],
   },
   {
@@ -104,10 +98,6 @@ const router = createBrowserRouter([
         path: "/investor/findMentees",
         element: <FindMentees />,
       },
-      {
-        path: "/investor/notifications",
-        element: <InvestorNotifications />,
-      },
     ]
   },
   {
@@ -127,13 +117,9 @@ const router = createBrowserRouter([
         element: <FindJobs />, 
       },
       {
-        path: "/student/findPartners",
-        element: <FindPartners />, 
-      },
-      {
-        path: "/student/notifications",
-        element: <StudentNotifications />, 
-      },
+        path: "/student/guidence",
+        element: <p>Guide </p>
+      }
     ]
   },
 ]);

@@ -1,72 +1,103 @@
 import { useNavigate, useParams } from "react-router-dom";
 import logo from "../../public/logo/BizConnect.png";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import PropTypes from "prop-types";
 import { MdError } from "react-icons/md";
 import CreatableSelect from 'react-select/creatable';
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { AuthContext } from "../auth/AuthProvider";
+// import useUser from "../hooks/useUser";
+// import useEntrepreneur from "../hooks/useEntrepreneur";
+// import useInvestor from "../hooks/useInvestor";
+// import useStudent from "../hooks/useStudent";
 const Info = () => {
   const { role } = useParams();
-  const { user } = useContext(AuthContext);
+  const { user, editing, setEditing } = useContext(AuthContext);
   const arr = ["initial", "common-part", "uncommon-part", "final"];
-  const [current, setCurrent] = useState(arr[0]);
+  const [current, setCurrent] = useState(editing? arr[1]: arr[0]);
   const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const axiosPublic = useAxiosPublic();
     const navigate = useNavigate()
+
+    const [data, setData] = useState([]) //common data
+    const [userData, commonRefetch] = [[],()=>userData]//useUser()
+    
+    useEffect(()=>{
+      setData(userData)
+    },[userData, user])
+
+
+    const [uData, setUData] = useState({})
+    // Todo: get data, uData here
+    const [entre, entreRefetch] = [[],()=>userData]//useEntrepreneur()
+    const [investor, investorRefetch] = [[],()=>userData]//useInvestor()
+    const [student, studentRefetch] = [[],()=>userData]//useStudent()
+
+    useEffect(()=>{
+      if(role==='student'){
+        setUData(student)
+    }
+    if(role==='investor'){
+      setUData(investor)
+    }
+    if(role==='entrepreneur'){
+      setUData(entre)
+    }
+    },[entre,investor,student, user, role, ])
+
+
     
 
     const [postError, setPostError] = useState(false);
-    console.log(postError)
   //form datas
   const [commonData, setCommonData] = useState({
-    birth_year: "",
-    birth_day: "",
-    birth_month: "",
-    linkedin: "",
-    website: "",
-    gender: "male",
+    birth_year: data.birth_year? data.birth_year : "",
+    birth_day: data.birth_day ? data.birth_day : "",
+    birth_month: data.birth_month ? data.birth_month : "",
+    linkedin: data.linkedin ? data.linkedin : "",
+    website: data.website ? data.website : "",
+    gender: data.gender ? data.gender :"male",
   });
 
   const [studentData, setStudentData] = useState({
-    major: "",
-    graduation_year: "",
-    introduction: "",
-    skills: [],
-    interested_fields: [],
-    experience: "",
-    current_employment_status: false, //true or false
-    highest_education_degree: "undergrad", //ssc, hsc, undergrad
-    last_result: 0, //out of 4 float
-    open_for_employment: true, //true or false
+    major: uData.major ? uData.major : "",
+    graduation_year: uData.graduation_year ? uData.graduation_year :  "",
+    introduction: uData.introduction ? uData.introduction :  "",
+    skills: uData.skills ? uData.skills :  [],
+    interested_fields: uData.interested_fields ? uData.interested_fields :  [],
+    experience: uData.experience ? uData.experience :  "",
+    current_employment_status: uData.current_employment_status ? uData.current_employment_status :  false, //true or false
+    highest_education_degree: uData.highest_education_degree ? uData.highest_education_degree :  "undergrad", //ssc, hsc, undergrad
+    last_result: uData.last_result ? uData.last_result :  0, //out of 4 float
+    open_for_employment: uData.open_for_employment ? uData.open_for_employment :  true, //true or false
   });
 
   const [investorData, setInvestorData] = useState({
-    interested_fields:[],
-    skills:[],
-    experience:"",
-    introduction:"",
-    total_investments:0,
-    company_names:[],
-    open_for_investments:true,
-    open_for_mentorship:true,
+    interested_fields: uData.interested_fields ? uData.interested_fields : [],
+    skills: uData.skills ? uData.skills : [],
+    experience: uData.experience ? uData.experience : "",
+    introduction: uData.introduction ? uData.introduction : "",
+    total_investments: uData.total_investments ? uData.total_investments : 0,
+    company_names: uData.company_names ? uData.company_names : [],
+    open_for_investments: uData.open_for_investments ? uData.open_for_investments : true,
+    open_for_mentorship: uData.open_for_mentorship ? uData.open_for_mentorship : true,
   });
 
   
 
     const [entrepreneurData, setEntrepreneurData] = useState({
-    industry: "",
-    introduction: "",
-    current_employment_status: false,
-    job_title: "",
-    skills: [],
-    interested_fields: [],
-    experience: "",
-    total_fund_raised: 0,
-    company_names: [],
-    open_for_partnership: true,
+    industry: uData.industry ? uData.industry :  "",
+    introduction: uData.introduction ? uData.introduction :  "",
+    current_employment_status: uData.current_employment_status ? uData.current_employment_status :  false,
+    job_title: uData.job_title ? uData.job_title :  "",
+    skills:  uData.skills ? uData.skills : [],
+    interested_fields: uData.interested_fields ? uData.interested_fields :  [],
+    experience: uData.experience ? uData.experience :  "",
+    total_fund_raised: uData.total_fund_raised ? uData.total_fund_raised :  0,
+    company_names: uData.company_names ? uData.company_names :  [],
+    open_for_partnership: uData.open_for_partnership ? uData.open_for_partnership :  true,
     }); 
 
     const handleNavigation = ()=>{
@@ -91,6 +122,10 @@ const Info = () => {
             website: commonData.website,
             gender: commonData.gender
         })
+        .then(()=>{
+          setEditing(true)
+          commonRefetch()
+        })
         .catch(() => {
             setPostError(true);
             setLoading(false)
@@ -112,6 +147,10 @@ const Info = () => {
             open_for_employment: studentData.open_for_employment,
             date: new Date().toISOString()
         })
+        .then(()=>{
+          setEditing(true)
+          studentRefetch()
+        })
         .catch(()=>{
             setPostError(true);
         })
@@ -130,6 +169,10 @@ const Info = () => {
             open_for_investments: investorData.open_for_investments,
             open_for_mentorship: investorData.open_for_mentorship,
             date: new Date().toISOString()
+        })
+        .then(()=>{
+          setEditing(true)
+          investorRefetch()
         })
         .catch(()=>{
             setPostError(true);
@@ -154,6 +197,7 @@ const Info = () => {
         })
         .catch(()=>{
             setPostError(true);
+            entreRefetch()
         })
         setLoading(false)
     }    
@@ -263,12 +307,12 @@ const Info = () => {
               {error && <p className="text-red-500 w-full text-center font-thin flex justify-center items-center gap-2">{error}<MdError />
               </p>}
               <div className="flex flex-row justify-between items-center mt-6">
-                <button
+                {editing || <button
                   className=" flex justify-center items-center text-4xl text-white hover:translate-y-1"
                   onClick={() => setCurrent(arr[0])}
                 >
                   <FaArrowLeftLong />
-                </button>
+                </button>}
                 <button
                   className=" flex justify-center items-center text-4xl text-white hover:translate-y-1"
                   onClick={() => {
