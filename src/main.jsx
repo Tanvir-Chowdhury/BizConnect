@@ -18,13 +18,13 @@ import FindEmployees from './pages/Entrepreneur/FindEmployees.jsx';
 import InvestorProfile from './pages/Investor/InvestorProfile.jsx';
 import FindStartups from './pages/Investor/FindStartups.jsx';
 import FindMentees from './pages/Investor/FindMentees.jsx';
-import EntrepreneurNotifications from './pages/Entrepreneur/EntrepreneurNotifications.jsx';
 import StudentProfile from './pages/Student/StudentProfile.jsx';
 import FindJobs from './pages/Student/FindJobs.jsx';
 import Login from "./pages/Login.jsx"
 import Signup from './pages/Signup.jsx';
 import AuthProvider from './auth/AuthProvider.jsx';
 import Info from './pages/Info.jsx';
+import Guide from './pages/Student/Guide.jsx';
 
 
 const router = createBrowserRouter([
@@ -118,7 +118,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/student/guidence",
-        element: <p>Guide </p>
+        element: <Guide/>
       }
     ]
   },

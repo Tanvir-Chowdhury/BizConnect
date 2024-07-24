@@ -28,7 +28,7 @@ const Sidebar = ({ portal }) => {
     student: [
       { to: '/student/profile', text: 'Profile' },
       { to: '/student/findJobs', text: 'Find Jobs' },
-      { to: '/student/guidence', text: 'Guide'}
+      { to: '/student/guidence', text: 'AI Guide'}
     ],
   };
 
