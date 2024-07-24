@@ -49,7 +49,7 @@ const FindEmployees = () => {
   // Render function
   return (
 
-    <div className="bg-gray-950 text-gray-300 md:ml-40">
+    <div className="bg-gray-950 text-gray-300 lg:ml-40">
 
       <div className="container mx-auto pb-7">
         <h1 className='text-center text-4xl font-bold text-[#d4a1e9] py-7'>Find Co-founders</h1>
@@ -91,77 +91,77 @@ const FindEmployees = () => {
 
                 {/* Fetch and display entrepreneur details */}
                 <section className='flex justify-between flex-row w-full'>
-                  <button className="btn btn-ghost bg-gradient-to-r from-[#e9aafd] to-[#b4abfd] hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-[#462a5f] font-bold hover:text-white" onClick={() => document.getElementById(`modal${entrepreneur.email}`).showModal()}>See Details</button>
+                <button className="btn btn-ghost bg-gradient-to-r from-[#e9aafd] to-[#b4abfd] hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-[#462a5f] font-bold hover:text-white" onClick={() => document.getElementById(`modal${entrepreneur.email}`).showModal()}>See Details</button>
 
-                  {/* Modal Dialog Definition */}
-                  <dialog id={`modal${entrepreneur.email}`} className="modal">
-                    <div className="modal-box w-11/12 max-w-5xl bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% text-black">
-                      <div className="p-8">
-                        {/* Entrepreneur Name */}
-                        <h3 className="font-bold text-2xl text-white mb-4">{entrepreneur.name}</h3>
+{/* Modal Dialog Definition */}
+<dialog id={`modal${entrepreneur.email}`} className="modal">
+  <div className="modal-box w-11/12 max-w-5xl bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% text-black">
+    <div className="p-8">
+      {/* Entrepreneur Name */}
+      <h3 className="font-bold text-2xl text-white mb-4">{entrepreneur.name}</h3>
 
-                        {/* User Details */}
-                        {userDetails[entrepreneur.email] && (
-                          <div className="mb-6">
-                            <h2 className="text-2xl text-white font-bold">{userDetails[entrepreneur.email].name}</h2>
-                            <p className="text-white">Phone Number: {userDetails[entrepreneur.email]?.phone_number}</p>
-                            <p className="text-white">LinkedIn: {userDetails[entrepreneur.email]?.linkedin}</p>
-                            {userDetails[entrepreneur.email]?.website && <p className="text-white">Website: {userDetails[entrepreneur.email].website}</p>}
-                          </div>
-                        )}
+      {/* User Details */}
+      {userDetails[entrepreneur.email] && (
+        <div className="mb-6">
+          <h2 className="text-2xl text-white font-bold">{userDetails[entrepreneur.email].name}</h2>
+          <p className="text-white">Phone Number: {userDetails[entrepreneur.email]?.phone_number}</p>
+          <p className="text-white">LinkedIn: {userDetails[entrepreneur.email]?.linkedin}</p>
+          {userDetails[entrepreneur.email]?.website && <p className="text-white">Website: {userDetails[entrepreneur.email].website}</p>}
+        </div>
+      )}
 
-                        {/* Additional Details */}
-                        <div className="flex flex-wrap mb-6">
-                          <div className="w-full lg:w-1/2">
-                            <h4 className="font-bold text-lg text-white">Skills:</h4>
-                            <p className="text-white">{entrepreneur.skills.join(', ')}</p>
-                          </div>
-                          <div className="w-full lg:w-1/2">
-                            <h4 className="font-bold text-lg text-white">Interested Field:</h4>
-                            <p className="text-white">{entrepreneur.interested_fields.join(', ')}</p>
-                          </div>
-                        </div>
+      {/* Additional Details */}
+      <div className="flex flex-wrap mb-6">
+        <div className="w-full lg:w-1/2">
+          <h4 className="font-bold text-lg text-white">Skills:</h4>
+          <p className="text-white">{entrepreneur.skills.join(', ')}</p>
+        </div>
+        <div className="w-full lg:w-1/2">
+          <h4 className="font-bold text-lg text-white">Interested Field:</h4>
+          <p className="text-white">{entrepreneur.interested_fields.join(', ')}</p>
+        </div>
+      </div>
 
-                        {/* Employment and Experience Details */}
-                        <div className="flex flex-wrap mb-6">
-                          <div className="w-full lg:w-1/2">
-                            <h4 className="font-bold text-lg text-white">Current Employment Type:</h4>
-                            <p className="text-white">{entrepreneur.current_employment_status ? 'Employed' : 'Unemployed'}</p>
-                          </div>
-                          <div className="w-full lg:w-1/2">
-                            <h4 className="font-bold text-lg text-white">Experience:</h4>
-                            <p className="text-white">{entrepreneur.experience}</p>
-                          </div>
-                          <div className="w-full lg:w-1/2">
-                            {userDetails[entrepreneur.email] && (
-                              <div className="mb-6">
-                                <h4 className="font-bold text-lg text-white">Age: {age(userDetails[entrepreneur.email].birth_year)}</h4>
-                              </div>
-                            )}
-                          </div>
-                          <div className="w-full lg:w-1/2">
-                            <h4 className="font-bold text-lg text-white">Total Fund Raised:</h4>
-                            <p className="text-white">${entrepreneur.total_fund_raised}</p>
-                          </div>
-                          <div className="w-full lg:w-1/2">
-                            <h4 className="font-bold text-lg text-white">Company Names:</h4>
-                            <p className="text-white">{entrepreneur.company_names.join(', ')}</p>
-                          </div>
-                        </div>
+      {/* Employment and Experience Details */}
+      <div className="flex flex-wrap mb-6">
+        <div className="w-full lg:w-1/2">
+          <h4 className="font-bold text-lg text-white">Current Employment Type:</h4>
+          <p className="text-white">{entrepreneur.current_employment_status ? 'Employed' : 'Unemployed'}</p>
+        </div>
+        <div className="w-full lg:w-1/2">
+          <h4 className="font-bold text-lg text-white">Experience:</h4>
+          <p className="text-white">{entrepreneur.experience}</p>
+        </div>
+        <div className="w-full lg:w-1/2">
+          {userDetails[entrepreneur.email] && (
+            <div className="mb-6">
+              <h4 className="font-bold text-lg text-white">Age: {age(userDetails[entrepreneur.email].birth_year)}</h4>
+            </div>
+          )}
+        </div>
+        <div className="w-full lg:w-1/2">
+          <h4 className="font-bold text-lg text-white">Total Fund Raised:</h4>
+          <p className="text-white">${entrepreneur.total_fund_raised}</p>
+        </div>
+        <div className="w-full lg:w-1/2">
+          <h4 className="font-bold text-lg text-white">Company Names:</h4>
+          <p className="text-white">{entrepreneur.company_names.join(', ')}</p>
+        </div>
+      </div>
 
-                        {/* Email */}
-                        <div className="mb-6">
-                          <h4 className="font-bold text-lg text-white">Email:</h4>
-                          <p className="text-white"><a href={`mailto:${entrepreneur.email}`}>{entrepreneur.email}</a></p>
-                        </div>
+      {/* Email */}
+      <div className="mb-6">
+        <h4 className="font-bold text-lg text-white">Email:</h4>
+        <p className="text-white"><a href={`mailto:${entrepreneur.email}`}>{entrepreneur.email}</a></p>
+      </div>
 
-                        {/* Modal Dialog Action */}
-                        <div className="flex justify-end">
-                          <button className="btn btn-ghost bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-white font-bold hover:text-white" onClick={() => document.getElementById(`modal${entrepreneur.email}`).close()}>Close</button>
-                        </div>
-                      </div>
-                    </div>
-                  </dialog>
+      {/* Modal Dialog Action */}
+      <div className="flex justify-end">
+        <button className="btn btn-ghost bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-white font-bold hover:text-white" onClick={() => document.getElementById(`modal${entrepreneur.email}`).close()}>Close</button>
+      </div>
+    </div>
+  </div>
+</dialog>
 
                   {/* Contact Button */}
                   <div className="card-actions">

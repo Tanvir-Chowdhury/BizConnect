@@ -1,8 +1,5 @@
-// src/App.js
-import React from 'react';
 import './App.css';
-import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaBriefcase, FaArrowRight, FaUsers, FaHandshake } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
@@ -10,7 +7,7 @@ const App = () => {
   return (
     <>
       {/* Navbar */}
-      <div className="navbar bg-gradient-to-l from-[#ad5389] to-[#3c1053] w-full h-16 sticky top-0 z-50">
+      <div className="navbar bg-gradient-to-l from-[#ad5389] to-[#3c1053] w-full h-16 sticky top-0 z-50 border-b-[1px] border-black">
         <div className="flex-1">
           <a className="btn btn-ghost text-xl font-bold text-black mb-4">
             <img
@@ -51,14 +48,14 @@ const App = () => {
       </div>
 
       {/* Home Content */}
-      <div className="bg-[url(./public/Home/header.jpg)] min-h-[calc(100vh-4rem)] py-12">
+      <div className="bg-fuchsia-950 bg-opacity-95 min-h-[calc(100vh-4rem)] py-12">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
             <motion.h1
               initial={{ opacity: 0, y: -50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-5xl font-extrabold text-gray-800"
+              className="text-5xl font-extrabold text-white"
             >
               Welcome to BizConnect
             </motion.h1>
@@ -66,7 +63,7 @@ const App = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
-              className="mt-4 text-2xl text-gray-600"
+              className="mt-4 text-2xl text-gray-300 text-opacity-95"
             >
               Connecting students, entrepreneurs, and investors for a brighter
               future.
@@ -108,7 +105,7 @@ const App = () => {
               transition={{ duration: 0.5 }}
               className="p-8  bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-xl text-white"
             >
-              <div className="text-center pb-9">
+              <div className="text-center pb-9 hover:shadow-md shadow-white">
                 <div className='flex justify-center'>
                 <FaUsers className="text-5xl mb-6" /></div>
                 <h2 className="text-3xl font-semibold mb-4">For Students</h2>
@@ -129,7 +126,7 @@ const App = () => {
               transition={{ duration: 0.5 }}
               className="p-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-xl text-white"
             >
-              <div className="text-center">
+              <div className="text-center pb-9 hover:shadow-md shadow-white">
               <div className='flex justify-center'>
               <FaBriefcase className="text-5xl mb-6 " /></div>
                 <h2 className="text-3xl font-semibold mb-4">For Entrepreneurs</h2>
@@ -150,7 +147,7 @@ const App = () => {
               transition={{ duration: 0.5 }}
               className="p-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg shadow-xl text-white"
             >
-              <div className="text-center">
+              <div className="text-center  pb-9 hover:shadow-md shadow-white">
                 <div className='flex justify-center'>
                 
                 <FaHandshake className="text-5xl mb-6" /></div>

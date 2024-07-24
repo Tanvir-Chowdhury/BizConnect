@@ -1,4 +1,3 @@
-// pages/FindStartups.jsx
 import React, { useEffect, useState } from 'react';
 
 const FindStartups = () => {
@@ -61,7 +60,7 @@ const FindStartups = () => {
     };
 
     return (
-        <div className="bg-gray-950 text-gray-300 md:ml-40">
+        <div className="bg-gray-950 text-gray-300 lg:ml-40">
             <div className="container mx-auto pb-7">
                 <h1 className='text-center text-4xl font-bold text-[#d4a1e9] py-7'>Find Startups</h1>
 
