@@ -142,7 +142,7 @@ const TopBar = ({ portal }) => {
   
   const notifications = [
     {
-      _id: 1,
+      _id: 0,
       from: "mentee@gmail.com",
       from_username: "ayon",
       to: "to@gmail.com",

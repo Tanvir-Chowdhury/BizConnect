@@ -5,15 +5,15 @@ import { AuthContext } from '../auth/AuthProvider';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 
 const Login = () => {
-  const { user, logInWithEmailPass} = useContext(AuthContext)
+  const { logInWithEmailPass} = useContext(AuthContext)
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
   const axiosPublic = useAxiosPublic()
   const navigate = useNavigate()
 
-  const getRole = async()=>{
+  const getRole = async(email)=>{
     try {
-      const response = await axiosPublic.get(`/users/role/${user?.email}`);
+      const response = await axiosPublic.get(`/users/role/${email}`);
       return response.data;
     } catch (error) {
       setError("Error getting credentilas");
@@ -21,9 +21,10 @@ const Login = () => {
     }
   }
 
-  const getData = async(role)=>{
+  const getData = async(role, email)=>{
     try {
-      const response = await axiosPublic.get(`/data/${role}/${user?.email}`);
+      const response = await axiosPublic.get(`/data/${role}/${email}`);
+      console.log(response)
       return response.data;
     } catch (error) {
       return null
@@ -32,41 +33,38 @@ const Login = () => {
   
 
   const handleSubmit = async(e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
-    const email = e.target.email.value
-    const pass = e.target.password.value
+    const email = e.target.email.value;
+    const pass = e.target.password.value;
     
-    logInWithEmailPass(email, pass)
-        .then(() => {
-          setError(false);
-          setLoading(false)
-          const role = getRole() 
+    try {
+        await logInWithEmailPass(email, pass);
+        setError(false);
+        const role = await getRole(email); // Await the role
+        
+        if (role) {
+            const data = await getData(role, email); // Await the data
+            console.log(data)
+            if (data === null) {
+                navigate(`/info/${role}`);
+            } else {
+                if (role === 'student') {
+                    navigate('/student');
+                } else if (role === 'investor') {
+                    navigate('/investor');
+                } else if (role === 'entrepreneur') {
+                    navigate('/entrepreneur');
+                }
+            }
+        }
+    } catch (err) {
+        setError(err.message);
+    } finally {
+        setLoading(false);
+    }
+};
 
-          if (role !== null){
-            const data = getData(role)
-            if (data === null){
-              navigate(`/info/${role}`)
-            }
-            else{
-              if(role==='student'){
-                navigate('/student')
-            }
-              if(role==='investor'){
-                navigate('/investor')
-            }
-              if(role==='entrepreneur'){
-                navigate('/entrepreneur')
-            }
-            }
-          }
-          
-        })
-        .catch((err) => {
-          setError(err.message);
-          setLoading(false)
-        });
-  };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-700">

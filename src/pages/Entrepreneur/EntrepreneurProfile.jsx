@@ -4,36 +4,13 @@ import { BiPhone } from "react-icons/bi";
 import { FaIndustry, FaLinkedin } from "react-icons/fa";
 import { CgWebsite } from "react-icons/cg";
 import { AiFillExperiment } from "react-icons/ai";
+import useUser from "../../hooks/useUser";
+import useEntrepreneur from "../../hooks/useEntrepreneur";
 
-const entrepreneur = {
-  email: "sa@gmail.com",
-  industry: "Web Devlopement",
-  introduction: "hey there I am entre",
-  current_employment_status: true,
-  job_title: "Web Devloper",
-  skills: ["react", "mern", "communication", "js", "html","react", "mern", "communication", "js", "html","react", "mern", "communication", "js", "html"],
-  interested_fields: ["webdev", "ml", "ai"],
-  experience: "5 years at Caltech",
-  total_fund_raised: 200,
-  company_names: ["a", "b"],
-  open_for_partnership: true,
-  date: new Date().toISOString(),
-};
-const user = {
-  name: "Ayon",
-  email: "sa@gmail.com",
-  phone: "01761992988",
-  username: "ayO_On",
-  role: "student",
-  date: new Date().toISOString,
-  birth_year: 2023,
-  birth_day: 2,
-  birth_month: 23,
-  linkedin: "www.linkdin/ayon",
-  website: "www.ayon.com",
-  gender: "male",
-};
 const EntrepreneurProfile = () => {
+  const [user] = useUser();
+  const [entrepreneur] = useEntrepreneur();
+  console.log(entrepreneur)
   return (
     <>
       <div className="p-4 min-h-[calc(100vh-4rem)] lg:ml-40 bg-gray-950 text-gray-300">
