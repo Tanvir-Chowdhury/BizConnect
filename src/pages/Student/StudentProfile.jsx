@@ -4,39 +4,12 @@ import { BiPhone } from "react-icons/bi";
 import { FaIndustry, FaLinkedin } from "react-icons/fa";
 import { CgWebsite } from "react-icons/cg";
 import { AiFillExperiment } from "react-icons/ai";
-
-const user = {
-  name: "Ayon", //
-  email: "sa@gmail.com",
-  phone: "01761992988",
-  username: "ayO_On", //
-  role: "student", //
-  date: new Date().toISOString,
-  birth_year: 2023, //
-  birth_day: 2, //
-  birth_month: 23, //
-  linkedin: "www.linkdin/ayon", //
-  website: "www.ayon.com", //
-  gender: "male", //
-};
-
-const student = 
-  {
-    email: "sa@gmail.com",
-    major: "CSE",//
-    graduation_year: 2023,//
-    introduction: "hey there i am student",//
-    skills: ["react", "mern", "communication", "js", "html"],
-    interested_fields: ["webdev", "ml", "ai"],
-    experience: "2 years of exp", //
-    current_employment_status: false, //
-    highest_education_degree: "HSC",
-    last_result: 3.45,
-    open_for_employment: true, //
-    date: new Date().toISOString(),
-  };
+import useUser from "../../hooks/useUser";
+import useStudent from "../../hooks/useStudent";
 
 const StudentProfile = () => {
+  const [user] = useUser();
+  const [student] = useStudent();
     return (
         <>
       <div className="p-4 min-h-[calc(100vh-4rem)] lg:ml-40 bg-gray-950 text-gray-300">

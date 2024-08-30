@@ -15,15 +15,17 @@ const Sidebar = ({ portal }) => {
     entrepreneur: [
       { to: '/entrepreneur/profile', text: 'Profile' },
       { to: '/entrepreneur/startups', text: 'Startups' },
+      { to: '/entrepreneur/jobs', text: 'Jobs' },
       { to: '/entrepreneur/findPartners', text: 'Find Co-founders' },
       { to: '/entrepreneur/findInvestors', text: 'Find Investors' },
       { to: '/entrepreneur/findMentors', text: 'Find Mentors' },
       { to: '/entrepreneur/findEmployees', text: 'Find Employees' },
+      
     ],
     investor: [
       { to: '/investor/profile', text: 'Profile' },
       { to: '/investor/findStartups', text: 'Find Startups' },
-      { to: '/investor/findMentees', text: 'Find Mentees' },
+      { to: '/investor/jobs', text: 'Post Jobs' },
     ],
     student: [
       { to: '/student/profile', text: 'Profile' },

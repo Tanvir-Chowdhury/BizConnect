@@ -7,10 +7,10 @@ import { MdError } from "react-icons/md";
 import CreatableSelect from 'react-select/creatable';
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { AuthContext } from "../auth/AuthProvider";
-// import useUser from "../hooks/useUser";
-// import useEntrepreneur from "../hooks/useEntrepreneur";
-// import useInvestor from "../hooks/useInvestor";
-// import useStudent from "../hooks/useStudent";
+import useUser from "../hooks/useUser";
+import useEntrepreneur from "../hooks/useEntrepreneur";
+import useInvestor from "../hooks/useInvestor";
+import useStudent from "../hooks/useStudent";
 const Info = () => {
   const { role } = useParams();
   const { user, editing, setEditing } = useContext(AuthContext);
@@ -21,31 +21,26 @@ const Info = () => {
     const axiosPublic = useAxiosPublic();
     const navigate = useNavigate()
 
-    const [data, setData] = useState([]) //common data
-    const [userData, commonRefetch] = [[],()=>userData]//useUser()
-    
-    useEffect(()=>{
-      setData(userData)
-    },[userData, user])
+    const [data, commonRefetch] = useUser()
 
 
     const [uData, setUData] = useState({})
-    // Todo: get data, uData here
-    const [entre, entreRefetch] = [[],()=>userData]//useEntrepreneur()
-    const [investor, investorRefetch] = [[],()=>userData]//useInvestor()
-    const [student, studentRefetch] = [[],()=>userData]//useStudent()
+    const [entre, entreRefetch] = useEntrepreneur()
+    const [investor, investorRefetch] = useInvestor()
+    const [student, studentRefetch] = useStudent()
 
-    useEffect(()=>{
-      if(role==='student'){
-        setUData(student)
-    }
-    if(role==='investor'){
-      setUData(investor)
-    }
-    if(role==='entrepreneur'){
-      setUData(entre)
-    }
-    },[entre,investor,student, user, role, ])
+    useEffect(() => {
+        if(role === "student"){
+            setUData(student)
+        }
+        if(role === "investor"){
+            setUData(investor)
+        }
+        if(role === "entrepreneur"){
+            setUData(entre)
+        }
+
+    }, [role, entre, investor, student])
 
 
     
@@ -53,12 +48,12 @@ const Info = () => {
     const [postError, setPostError] = useState(false);
   //form datas
   const [commonData, setCommonData] = useState({
-    birth_year: data.birth_year? data.birth_year : "",
-    birth_day: data.birth_day ? data.birth_day : "",
-    birth_month: data.birth_month ? data.birth_month : "",
-    linkedin: data.linkedin ? data.linkedin : "",
-    website: data.website ? data.website : "",
-    gender: data.gender ? data.gender :"male",
+    birth_year: data?.birth_year? data.birth_year : "",
+    birth_day: data?.birth_day ? data.birth_day : "",
+    birth_month: data?.birth_month ? data.birth_month : "",
+    linkedin: data?.linkedin ? data.linkedin : "",
+    website: data?.website ? data.website : "",
+    gender: data?.gender ? data.gender :"male",
   });
 
   const [studentData, setStudentData] = useState({

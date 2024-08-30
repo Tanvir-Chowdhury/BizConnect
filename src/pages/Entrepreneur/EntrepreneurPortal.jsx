@@ -1,8 +1,6 @@
 // pages/EntrepreneurPortal.js
-import React from 'react';
 import TopBar from '../../components/TopBar';
 import Sidebar from '../../components/Sidebar';
-import Profile from "./EntrepreneurProfile"
 import { Outlet } from 'react-router-dom';
 
 const EntrepreneurPortal = () => {

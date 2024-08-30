@@ -1,70 +1,72 @@
-// pages/FindEmployees.js
-import { useEffect, useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useQuery } from 'react-query';
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { Toaster } from 'react-hot-toast';
 
 const FindEmployees = () => {
-  const [students, setStudents] = useState([]);
-  const [filteredStudents, setFilteredStudents] = useState([]);
   const [skillFilter, setSkillFilter] = useState('');
-  const [interestFilter, setInterestFilter] = useState(''); // Initialize as string
-  const [userDetails, setUserDetails] = useState({});
-  const [projects, setProjects] = useState([]);
-  const [certifications, setCertifications] = useState([]);
+  const [interestFilter, setInterestFilter] = useState('');
+  const axiosPublic = useAxiosPublic();
+  const [openModalEmail, setOpenModalEmail] = useState(null);
 
-  // Function to fetch student data
-  useEffect(() => {
-    fetch('/public/student.json')
-      .then(res => res.json())
-      .then(data => {
-        setStudents(data);
-        setFilteredStudents(data);
-      });
-  }, []);
+  // Fetch students data
+  const { data: students = [], isLoading, error, refetch } = useQuery(
+    'students',
+    async () => {
+      const response = await axiosPublic.get('/students');
+      return response.data;
+    },
+    {
+      enabled: !(skillFilter.trim() === '' && interestFilter.trim() === ''),
+    }
+  );
 
-  // Function to fetch user details
+  // Refetch students when skill or interest filter is cleared
   useEffect(() => {
-    fetch('/public/user.json')
-      .then(res => res.json())
-      .then(data => {
-        // Organize user details by email for easy lookup
-        const userDetailsMap = {};
-        data.forEach(user => {
-          userDetailsMap[user.email] = user;
-        });
-        setUserDetails(userDetailsMap);
-      });
-  }, []);
+    if (skillFilter.trim() === '' && interestFilter.trim() === '') {
+      refetch();
+    }
+  }, [skillFilter, interestFilter, refetch]);
 
-  // Function to fetch student projects
-  useEffect(() => {
-    fetch('/public/studentProject.json')
-      .then(res => res.json())
-      .then(data => setProjects(data));
-  }, []);
+  // Filter students based on skills and interests
+  const filteredStudents = useMemo(() => {
+    const trimmedSkillFilter = skillFilter.trim().toLowerCase();
+    const trimmedInterestFilter = interestFilter.trim().toLowerCase();
 
-  // Function to fetch student certifications
-  useEffect(() => {
-    fetch('/public/studentCertification.json')
-      .then(res => res.json())
-      .then(data => setCertifications(data));
-  }, []);
+    return students.filter(student => {
+      const hasSkills =
+        trimmedSkillFilter === '' ||
+        (student.skills && student.skills.some(skill => skill.toLowerCase().includes(trimmedSkillFilter)));
+      
+      const hasInterests =
+        trimmedInterestFilter === '' ||
+        (student.interested_fields && student.interested_fields.some(field => field.toLowerCase().includes(trimmedInterestFilter)));
+      
+      return hasSkills && hasInterests;
+    });
+  }, [students, skillFilter, interestFilter]);
 
-  // Function to filter students based on skills and interests
-  useEffect(() => {
-    const filtered = students.filter(student =>
-      student.skills.some(skill => skill.toLowerCase().includes(skillFilter.toLowerCase())) &&
-      (interestFilter === '' || student.interested_fields.some(field => field.toLowerCase().includes(interestFilter.toLowerCase())))
+  // Loading State
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gray-950">
+        <p className="text-xl text-gray-300">Loading...</p>
+      </div>
     );
-    setFilteredStudents(filtered);
-  }, [skillFilter, interestFilter, students]);
-
-  // Function to calculate age based on birth year
-  function age(birthYear) {
-    return 2024 - parseInt(birthYear, 10);
   }
 
-  // Render function
+  // Error State
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gray-950">
+        <p className="text-xl text-red-500">Error loading data. Please try again later.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-gray-950 text-gray-300 lg:ml-40">
+    <div className="bg-gray-950 text-gray-300 lg:ml-40 min-h-screen">
+      <Toaster position='top-right' />
       <div className="container mx-auto pb-7">
         <h1 className='text-center text-4xl font-bold text-[#d4a1e9] py-7'>Find Employees</h1>
 
@@ -90,163 +92,92 @@ const FindEmployees = () => {
 
         {/* Displaying Students */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mx-5">
-          {filteredStudents.map(student => (
-            <div className="card bg-[#221236] hover:bg-gradient-to-r hover:from-[#8b24dd] hover:to-[#ac3cc9] shadow-xl" key={student.email}>
+          {filteredStudents.length > 0 ? (
+            filteredStudents.map(student => (
+              <div
+                className="card bg-[#221236] hover:bg-gradient-to-r hover:from-[#8b24dd] hover:to-[#ac3cc9] shadow-xl transition duration-300"
+                key={student.email}
+              >
+                <div className="card-body items-center text-center">
+                  <h2 className='card-title text-2xl'>{student.email}</h2>
+                  <p>Interested in <b>{student.interested_fields.join(', ')}</b>.</p>
+                  <h3 className='text-lg'>Skills: <b>{student.skills.join(', ')}</b></h3>
 
-              {/* Card Body */}
-              <div className="card-body items-center text-center">
-                {/* <h2 className="card-title text-2xl">{student.name}</h2> */}
-                {userDetails[student.email] && (
-                  <div>
-                    <h2 className='card-title text-2xl'>{userDetails[student.email].name}</h2>
-                  </div>
-                )}
-                <p>Interested in <b>{student.interested_fields.join(', ')}</b>.</p>
-                <h3 className='text-lg'>Skills: <b>{student.skills.join(', ')}</b></h3>
+                  <section className='flex justify-between flex-row w-full mt-4'>
+                    {/* See Details Button */}
+                    <button
+                      className="btn btn-ghost bg-gradient-to-r from-[#e9aafd] to-[#b4abfd] hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-[#462a5f] font-bold hover:text-white"
+                      onClick={() => setOpenModalEmail(student.email)}
+                    >
+                      See Details
+                    </button>
 
-                {/* Fetch and display student projects */}
-                <section className='flex justify-between flex-row w-full'>
-                  <button className="btn btn-ghost bg-gradient-to-r from-[#e9aafd] to-[#b4abfd] hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-[#462a5f] font-bold hover:text-white" onClick={() => document.getElementById(`modal${student.email}`).showModal()}>See Details</button>
+                    {/* Contact Button */}
+                    <div className="card-actions">
+                      <button className="btn btn-ghost bg-gradient-to-r from-[#e9aafd] to-[#b4abfd] hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-[#462a5f] font-bold hover:text-white">
+                        <a href={`mailto:${student.email}`}>Contact</a>
+                      </button>
+                    </div>
+                  </section>
+                </div>
 
-                  {/* Modal Dialog Definition */}
-                  <dialog id={`modal${student.email}`} className="modal">
-                    <div className="modal-box w-11/12 max-w-5xl bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% text-black">
+                {/* Modal Dialog */}
+                {openModalEmail === student.email && (
+                  <dialog
+                    open
+                    onClose={() => setOpenModalEmail(null)}
+                    className="modal"
+                  >
+                    <div className="modal-box w-11/12 max-w-5xl bg-gradient-to-r from-indigo-500 via-sky-500 to-emerald-500 text-black">
                       <div className="p-8">
-                        {/* User Name */}
-                        <h3 className="font-bold text-2xl text-white mb-4">{student.name}</h3>
+                        {/* Student Name */}
+                        <h3 className="font-bold text-2xl text-white mb-4">
+                          {student.email || 'N/A'}
+                        </h3>
 
-                        {/* User Details */}
-                        {userDetails[student.email] && (
-                          <div className="mb-6">
-                            <h2 className="text-2xl text-white font-bold">{userDetails[student.email].name}</h2>
-                            <p className="text-white">Phone Number: {userDetails[student.email]?.phone_number}</p>
-                            <p className="text-white">LinkedIn: {userDetails[student.email]?.linkedin}</p>
-                            {userDetails[student.email]?.website && <p className="text-white">Website: {userDetails[student.email].website}</p>}
+                        {/* Student Details */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                          <div>
+                            <p className="text-white"><span className="font-semibold">Major:</span> {student.major || 'N/A'}</p>
                           </div>
-                        )}
-
-                        {/* Additional Details */}
-                        <div className="flex flex-wrap mb-6">
-                          <div className="w-full lg:w-1/2">
+                          <div>
+                            <p className="text-white"><span className="font-semibold">Graduation Year:</span> {student.graduation_year || 'N/A'}</p>
+                          </div>
+                          <div>
+                            <p className="text-white"><span className="font-semibold">Introduction:</span> {student.introduction || 'N/A'}</p>
+                          </div>
+                          <div>
+                            <p className="text-white"><span className="font-semibold">Experience:</span> {student.experience || 'N/A'}</p>
+                          </div>
+                          <div>
+                            <p className="text-white"><span className="font-semibold">Highest Education Degree:</span> {student.highest_education_degree || 'N/A'}</p>
+                          </div>
+                          <div>
+                            <p className="text-white"><span className="font-semibold">Last Result (GPA):</span> {student.last_result || 'N/A'}</p>
+                          </div>
+                          <div>
                             <h4 className="font-bold text-lg text-white">Skills:</h4>
                             <p className="text-white">{student.skills.join(', ')}</p>
                           </div>
-                          <div className="w-full lg:w-1/2">
-                            <h4 className="font-bold text-lg text-white">Interested Field:</h4>
+                          <div>
+                            <h4 className="font-bold text-lg text-white">Interested Fields:</h4>
                             <p className="text-white">{student.interested_fields.join(', ')}</p>
                           </div>
                         </div>
 
-                        {/* Employment and Educational Details */}
-                        <div className="flex flex-wrap mb-6">
-                          <div className="w-full lg:w-1/2">
-                            <h4 className="font-bold text-lg text-white">Current Employment Type:</h4>
-                            <p className="text-white">{student.current_employment_status ? 'Employed' : 'Unemployed'}</p>
-                          </div>
-                          <div className="w-full lg:w-1/2">
-                            <h4 className="font-bold text-lg text-white">Experience:</h4>
-                            <p className="text-white">{student.experience}</p>
-                          </div>
-                          <div className="w-full lg:w-1/2">
-                          {userDetails[student.email] && (
-                          <div className="mb-6">
-                            <h4 className="font-bold text-lg text-white">Age: {age(userDetails[student.email].birth_year)}</h4>
-                          </div>
-                        )}
-                          </div>
-                          <div className="w-full lg:w-1/2">
-                            <h4 className="font-bold text-lg text-white">Highest Educational Qualification:</h4>
-                            <p className="text-white">{student.highest_education_degree}</p>
-                            <h4 className="font-bold text-lg text-white">Result:</h4>
-                            <p className="text-white">CGPA/GPA: {student.last_result}</p>
-                          </div>
-                        </div>
-
-                        {/* Email */}
-                        <div className="mb-6">
-                          <h4 className="font-bold text-lg text-white">Email:</h4>
-                          <p className="text-white"><a href={`mailto:${student.email}`}>{student.email}</a></p>
-                        </div>
-
-                        {/* Projects Table */}
-                        <div className="mb-6">
-                          <h4 className="font-bold text-lg text-white mb-3">Projects:</h4>
-                          <div className="overflow-x-auto rounded-lg border border-gray-300">
-                            <table className="min-w-full bg-white rounded-lg">
-                              <thead className="bg-[#ad5389] text-white">
-                                <tr>
-                                  <th className="py-2 px-4">Title</th>
-                                  <th className="py-2 px-4">Description</th>
-                                  <th className="py-2 px-4">Skills</th>
-                                  <th className="py-2 px-4">GitHub URL</th>
-                                </tr>
-                              </thead>
-                              <tbody className="text-gray-700">
-                                {projects
-                                  .filter(project => project.email === student.email)
-                                  .map(project => (
-                                    <tr key={project.project_title}>
-                                      <td className="py-2 px-4">{project.project_title}</td>
-                                      <td className="py-2 px-4">{project.description}</td>
-                                      <td className="py-2 px-4">{project.project_skills.join(', ')}</td>
-                                      <td className="py-2 px-4"><a href={project.project_url} target="_blank" rel="noopener noreferrer">{project.project_url}</a></td>
-                                    </tr>
-                                  ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-
-                        {/* Certifications Table */}
-                        <div className="mb-6">
-                          <h4 className="font-bold text-lg text-white mb-3">Certifications:</h4>
-                          <div className="overflow-x-auto rounded-lg border border-gray-300">
-                            <table className="min-w-full bg-white rounded-lg">
-                              <thead className="bg-[#ad5389] text-white">
-                                <tr className=''>
-                                  <th className="py-2 px-4">Title</th>
-                                  <th className="py-2 px-4">Issued By</th>
-                                  <th className="py-2 px-4">Date</th>
-                                  <th className="py-2 px-4">Description</th>
-                                </tr>
-                              </thead>
-                              <tbody className="text-gray-700">
-                                {certifications
-                                  .filter(certification => certification.email === student.email)
-                                  .map(certification => (
-                                    <tr key={certification.certificate_title}>
-                                      <td className="py-2 px-4">{certification.certificate_title}</td>
-                                      <td className="py-2 px-4">{certification.issuedby}</td>
-                                      <td className="py-2 px-4">{certification.date}</td>
-                                      <td className="py-2 px-4">{certification.description}</td>
-                                    </tr>
-                                  ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-
-                        {/* Modal Dialog Action */}
-                        <div className="flex justify-end">
-                          <button className="btn btn-ghost bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-white font-bold hover:text-white" onClick={() => document.getElementById(`modal${student.email}`).close()}>Close</button>
+                        {/* Close Modal Button */}
+                        <div className="modal-action">
+                          <button className="btn bg-gradient-to-r from-[#e9aafd] to-[#b4abfd] hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-[#462a5f] font-bold hover:text-white" onClick={() => setOpenModalEmail(null)}>Close</button>
                         </div>
                       </div>
                     </div>
                   </dialog>
-
-
-
-
-                  {/* Contact Button */}
-                  <div className="card-actions">
-                    <button className="btn btn-ghost bg-gradient-to-r from-[#e9aafd] to-[#b4abfd] hover:bg-gradient-to-r hover:from-[#c141f8] hover:to-[#5b55fd] text-[#462a5f] font-bold hover:text-white">
-                      <a href={`mailto:${student.email}`}>Contact</a>
-                    </button>
-                  </div>
-                </section>
+                )}
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="text-center text-xl text-gray-400">No students found.</p>
+          )}
         </div>
       </div>
     </div>

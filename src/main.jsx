@@ -17,7 +17,6 @@ import FindMentors from './pages/Entrepreneur/FindMentors.jsx';
 import FindEmployees from './pages/Entrepreneur/FindEmployees.jsx';
 import InvestorProfile from './pages/Investor/InvestorProfile.jsx';
 import FindStartups from './pages/Investor/FindStartups.jsx';
-import FindMentees from './pages/Investor/FindMentees.jsx';
 import StudentProfile from './pages/Student/StudentProfile.jsx';
 import FindJobs from './pages/Student/FindJobs.jsx';
 import Login from "./pages/Login.jsx"
@@ -25,6 +24,8 @@ import Signup from './pages/Signup.jsx';
 import AuthProvider from './auth/AuthProvider.jsx';
 import Info from './pages/Info.jsx';
 import Guide from './pages/Student/Guide.jsx';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import Jobs from './pages/Entrepreneur/Jobs.jsx';
 
 
 const router = createBrowserRouter([
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
         element: <Startups />,
       },
       {
+        path: "/entrepreneur/jobs",
+        element: <Jobs />,
+      },
+      {
         path: "/entrepreneur/findPartners",
         element: <FindPartners />,
       },
@@ -76,6 +81,7 @@ const router = createBrowserRouter([
         path: "/entrepreneur/findMentors",
         element: <FindMentors />,
       },
+
     ],
   },
   {
@@ -95,8 +101,8 @@ const router = createBrowserRouter([
         element: <FindStartups />,
       },
       {
-        path: "/investor/findMentees",
-        element: <FindMentees />,
+        path: "/investor/jobs",
+        element: <Jobs />,
       },
     ]
   },
@@ -124,10 +130,15 @@ const router = createBrowserRouter([
   },
 ]);
 
+
+const queryClient = new QueryClient()
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
     <AuthProvider>
     <RouterProvider router={router} />
     </AuthProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

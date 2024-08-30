@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from 'react-query'
 import { useContext } from "react";
 import { AuthContext } from '../auth/AuthProvider';
 import useAxiosPublic from './useAxiosPublic';
@@ -13,12 +13,12 @@ const useInvestor = () => {
     const {data: investorData = [], refetch} = useQuery({
         queryKey: ['user-investor',user?.email],
         queryFn: async () => {
-            const res = await axiosPublic.get(`/investorsers/${user.email}`);
+            const res = await axiosPublic.get(`/investors/${user.email}`);
             return res.data
         },
     }
     )
-
+    console.log(investorData)
     return [investorData, refetch]
 };
 

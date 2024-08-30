@@ -4,39 +4,12 @@ import { BiPhone } from "react-icons/bi";
 import { FaIndustry, FaLinkedin } from "react-icons/fa";
 import { CgWebsite } from "react-icons/cg";
 import { AiFillExperiment } from "react-icons/ai";
-
-const user = {
-  name: "Ayon", //
-  email: "sa@gmail.com",
-  phone: "01761992988",
-  username: "ayO_On", //
-  role: "student", //
-  date: new Date().toISOString,
-  birth_year: 2023, //
-  birth_day: 2, //
-  birth_month: 23, //
-  linkedin: "www.linkdin/ayon", //
-  website: "www.ayon.com", //
-  gender: "male", //
-};
-
-
-
-const investor = 
-  {
-    email: "sa@gmail.com",
-    interested_fields: ["webdev", "ml", "ai"],
-    skills: ["react", "mern", "communication", "js", "html"],
-    experience: "2 years of exp",
-    introduction: "hey there i am investor",
-    total_investments: 2000,
-    company_names: ["aCom", "bCom"],
-    open_for_investments: true,
-    open_for_mentorship: true,
-    date: new Date().toISOString(),
-  };
+import useUser from "../../hooks/useUser";
+import useInvestor from "../../hooks/useInvestor";
 
 const InvestorProfile = () => {
+  const [user] = useUser();
+  const [investor] = useInvestor();
     return (
       <>
       <div className="p-4 min-h-[calc(100vh-4rem)] lg:ml-40 bg-gray-950 text-gray-300">
